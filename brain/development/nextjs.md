@@ -33,3 +33,22 @@ Flat config (`eslint.config.mjs`) using:
 
 - `tsconfig.json` — strict mode, `@/*` path alias mapping to `./src/*`
 - `next-env.d.ts` — Next.js TypeScript declarations (auto-generated)
+
+## PostCSS
+
+`postcss.config.js` uses Tailwind CSS + Autoprefixer plugins.
+
+## Tailwind CSS
+
+`tailwind.config.js`:
+- Content paths: `./src/**/*.{js,ts,jsx,tsx}`
+- Custom font families via CSS variables: `--font-syne`, `--font-outfit`, `--font-mono`
+- No custom plugins or other extensions
+
+## Environment
+
+`.env` contains Neon (Postgres) database credentials in Vercel Postgres format. Includes:
+- `DATABASE_URL` / `POSTGRES_URL` (pooled connection via PgBouncer)
+- `DATABASE_URL_UNPOOLED` / `POSTGRES_URL_NON_POOLING` (direct connection)
+- PostgreSQL parameters: `PGHOST`, `PGUSER`, `PGDATABASE`, `PGPASSWORD`
+- All Vercel Postgres template variables (`POSTGRES_*`)

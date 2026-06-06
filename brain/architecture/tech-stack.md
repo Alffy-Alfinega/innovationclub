@@ -22,8 +22,16 @@
 | `@types/node` | ^20 | Node type defs |
 | `@types/react` | ^19 | React type defs |
 | `@types/react-dom` | ^19 | ReactDOM type defs |
+| `tailwindcss` | ^4.3.0 | Utility-first CSS |
+| `postcss` | ^8.5.15 | CSS transformation pipeline |
+| `autoprefixer` | ^10.5.0 | Vendor prefixing |
 
 ## Runtime
 
 - Node.js >= 18 (Next.js 16 requirement)
 - Modern browser with WebGL support (for Babylon.js)
+
+## Environment
+
+- `.env` contains Neon (Postgres) credentials in Vercel Postgres format:
+  - `DATABASE_URL`, `POSTGRES_URL`, `PGHOST`, `PGUSER`, `PGPASSWORD`, `PGDATABASE`

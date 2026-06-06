@@ -45,8 +45,38 @@ Staggered cascade with increasing delays:
   to   { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fadeLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
 @keyframes marquee {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+
+@keyframes scrollLine {
+  0%, 100% { transform: scaleY(0); opacity: 0; }
+  50%      { transform: scaleY(1); opacity: 1; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(44, 111, 237, 0.25); }
+  50%      { box-shadow: 0 0 20px rgba(44, 111, 237, 0.5); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
 ```
+
+## Usage reference
+
+- `fadeIn` — hero scroll indicator, general fade-ins
+- `fadeUp` — staggered section entry (.reveal class with IntersectionObserver)
+- `fadeLeft` — sidebar/slide-in content
+- `marquee` — stats strip (StatsMarquee) and testimonials (TestimonialCarousel), 40s linear infinite
+- `scrollLine` — hero scroll-down prompt line
+- `pulseGlow` — card hover glow effect
+- `float` — subtle floating effect for decorative elements

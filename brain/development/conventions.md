@@ -47,3 +47,18 @@ export default function MyScene() {
 - Descriptive commit messages
 - No force pushes
 - Keep commits focused on single concerns
+
+## Brain updates
+
+- Every AI session must write a session log in `brain/sessions/`
+- Update topic files when new information is discovered
+- Keep `brain/_index.md` in sync with available files
+- Create ADRs for significant architectural decisions
+- Remove stale information — don't accumulate obsolete notes
+
+## Linting & formatting
+
+- ESLint 9 flat config (`eslint.config.mjs`)
+- Uses `eslint-config-next/core-web-vitals` + `eslint-config-next/typescript`
+- `react-hooks/immutability` rule disabled
+- Run: `npm run lint`

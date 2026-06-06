@@ -13,7 +13,10 @@ References: [[alffy.alfinega.com]]
 --text-dimmer  : #8A8AAA   /* Tertiary text */
 --text-faint   : #666666   /* Captions / lowest emphasis */
 --border       : #1C1C34   /* Card borders, dividers */
---surface      :            /* Card surface (slightly lighter than --bg) */
+--surface      : #0A0A1A   /* Card surface (slightly lighter than --bg) */
+--primary      : #2C6FED   /* Electric blue */
+--primary-dark : #1A52C4   /* Darker blue for gradients */
+--secondary    : #D4A843   /* Gold */
 ```
 
 ### Brand colors
@@ -24,6 +27,7 @@ References: [[alffy.alfinega.com]]
 | Primary dark | `#1A52C4` | Gradient pair with primary |
 | Secondary | `#D4A843` | Star ratings, gold-accented cards, highlights |
 | Background | `#04040C` | Page body, hero |
+| Surface | `#0A0A1A` | Card backgrounds, elevated surfaces |
 
 ### Opacity variants
 
