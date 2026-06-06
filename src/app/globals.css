@@ -1,6 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-syne: var(--font-syne), "Syne", sans-serif;
+  --font-outfit: var(--font-outfit), "Outfit", sans-serif;
+  --font-mono: var(--font-mono), "JetBrains Mono", monospace;
+}
 
 :root {
   --bg: #04040C;

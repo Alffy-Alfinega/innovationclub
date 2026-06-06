@@ -1,14 +1,2 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
-  theme: {
-    extend: {
-      fontFamily: {
-        syne: ['var(--font-syne)', 'sans-serif'],
-        outfit: ['var(--font-outfit)', 'sans-serif'],
-        mono: ['var(--font-mono)', 'monospace'],
-      },
-    },
-  },
-  plugins: [],
-};
+// Tailwind v4 uses CSS @theme instead — see src/app/globals.css
+// This file is retained for reference; content discovery is automatic in v4.

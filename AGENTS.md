@@ -43,8 +43,8 @@ public/          # Static assets
 babel.config.js  # Required for Reactylon — uses babel-plugin-reactylon
 eslint.config.mjs # ESLint 9 flat config (core-web-vitals + typescript)
 next.config.ts   # Bare — add image domains, webpack overrides here
-postcss.config.js # Tailwind CSS + Autoprefixer
-tailwind.config.js # Custom font families via CSS variables
+postcss.config.js # @tailwindcss/postcss + Autoprefixer
+tailwind.config.js # Retained for reference (v4 config lives in globals.css @theme)
 tsconfig.json    # strict: true, @/* → ./src/*
 ```
 
