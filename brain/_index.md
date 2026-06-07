@@ -4,33 +4,31 @@ Master navigation for the innovationclub project brain.
 
 ## Meta
 
-- [[meta/conventions.md]] — How to update the brain
-- [[meta/changelog.md]] — Brain structure changes
+- [[meta/conventions.md]]
+- [[meta/changelog.md]]
 
 ## Architecture
 
-- [[architecture/overview.md]] — High-level architecture
-- [[architecture/tech-stack.md]] — Dependencies and versions
-- [[architecture/directory-map.md]] — Every file and folder explained
+- [[architecture/overview.md]]
+- [[architecture/tech-stack.md]]
+- [[architecture/directory-map.md]]
 
 ## Design
 
-- [[design/design-system.md]] — Colors, typography, spacing, components
-- [[design/animations.md]] — Animation patterns and conventions
-- [[design/layout.md]] — Layout system, containers, responsive breakpoints
+- [[design/design-system.md]]
+- [[design/animations.md]]
+- [[design/layout.md]]
 
 ## Development
 
-- [[development/commands.md]] — All CLI commands
-- [[development/conventions.md]] — Code style, naming, patterns
-- [[development/reactylon.md]] — Reactylon / Babylon.js usage
-- [[development/nextjs.md]] — Next.js specific configuration
+- [[development/commands.md]]
+- [[development/conventions.md]]
+- [[development/nextjs.md]]
 
 ## Sessions
 
-- [[sessions/_index.md]] — Session log index
-- [[sessions/001-initial-scaffold.md]] — Initial project setup
+- [[sessions/_index.md]]
 
 ## Decisions
 
-- [[decisions/adr-001-brain-structure.md]] — Brain structure ADR
+- [[decisions/adr-001-brain-structure.md]]
