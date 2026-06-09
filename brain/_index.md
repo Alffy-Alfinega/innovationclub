@@ -1,34 +1,66 @@
-# Brain Index
+# Innovation Club — Project Brain
 
-Master navigation for the innovationclub project brain.
+> **Project:** `innovationclub` — Young Innovators registration portal  
+> **URL:** [http://localhost:3000](http://localhost:3000)  
+> **Stack:** Express 4 + EJS + PostgreSQL (Neon)  
+> **Git:** Local, branch `alffy`  
+> **License:** MIT (2026 Alffy / Alfinega)
 
-## Meta
+---
 
-- [[meta/conventions.md]]
-- [[meta/changelog.md]]
+## Map of Content
 
-## Architecture
+### Foundation
+- [[foundation/stack]] — Tech stack table with versions
+- [[foundation/configuration]] — package.json, app.js, env
+- [[foundation/design]] — Colors, typography, CSS custom properties
+- [[foundation/infrastructure]] — Neon DB, hosting, deployment
+- [[foundation/env]] — Environment variables reference
 
-- [[architecture/overview.md]]
-- [[architecture/tech-stack.md]]
-- [[architecture/directory-map.md]]
+### Routes
+- [[routes/map]] — All routes, metadata, render logic
 
-## Design
+### Views
+- [[views/overview]] — EJS templates, partials, styling patterns
 
-- [[design/design-system.md]]
-- [[design/animations.md]]
-- [[design/layout.md]]
+### Data
+- [[data/overview]] — Data layer, migration from Access DB
 
-## Development
+### Database
+- [[database/schema]] — students table schema
 
-- [[development/commands.md]]
-- [[development/conventions.md]]
-- [[development/nextjs.md]]
+### Business
+- [[business/program]] — Program info, targets, team
 
-## Sessions
+### History
+- [[changelog/_index]] — Change log
 
-- [[sessions/_index.md]]
+---
 
-## Decisions
+## Quick Links
 
-- [[decisions/adr-001-brain-structure.md]]
+| Area | Key File(s) |
+|---|---|
+| Entry point | `app.js` |
+| Database pool | `db.js` |
+| Homepage | `views/index.ejs` |
+| Registration form | `views/register.ejs` |
+| Success page | `views/success.ejs` |
+| Header | `views/partials/header.ejs` |
+| Footer | `views/partials/footer.ejs` |
+| Design tokens | `public/css/style.css` |
+| Logo | `public/logo-nav.png` |
+| Favicon | `public/favicon.ico` |
+
+---
+
+## File Count
+
+| Category | Count |
+|---|---|
+| Pages (EJS) | 4 |
+| Partials | 2 |
+| Config files | 4 (package.json, .env, .gitignore, AGENTS.md) |
+| Source (JS) | 2 (app.js, db.js) |
+| Static assets | 4 (css, logo, favicon) |
+| **Total** | **~16 files** |
