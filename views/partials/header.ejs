@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= typeof title !== 'undefined' ? title : 'Young Innovators — Alffy' %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="nav-logo">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <rect width="36" height="36" rx="8" fill="#2C6FED"/>
+          <text x="18" y="24" text-anchor="middle" fill="white" font-family="Syne, sans-serif" font-weight="800" font-size="18">YI</text>
+        </svg>
+        <span>Young <small>Innovators</small></span>
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/register">Register</a>
+        <a href="/register" class="nav-cta">Join Free →</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/" onclick="closeMenu()">Home</a>
+    <a href="/register" onclick="closeMenu()">Register</a>
+    <div class="mobile-contact">
+      <p>Get in touch</p>
+      <a href="mailto:contact@alfinega.com">contact@alfinega.com</a>
+      <a href="tel:+256747113059" class="muted">+256 747 113 059</a>
+      <p style="color:var(--text-dimmer);font-family:var(--font-outfit);text-transform:none;letter-spacing:0;font-size:0.875rem;margin-top:0.5rem">Makindye, Kampala, Uganda</p>
+    </div>
+  </div>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    const hamburger = document.getElementById('hamburger');
+    const mobile = document.getElementById('mobileMenu');
+
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobile.classList.toggle('open');
+      document.body.style.overflow = mobile.classList.contains('open') ? 'hidden' : '';
+    });
+
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      mobile.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+  </script>
+
+  <main>

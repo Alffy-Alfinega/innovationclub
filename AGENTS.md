@@ -1,18 +1,18 @@
 # innovationclub — AGENTS.md
 
-Next.js 16 App Router + React Three Fiber + TypeScript 5 + Tailwind CSS v4.
+Express 4 + EJS webapp.
 
 ## Commands
 
 ```bash
-npm run dev      # dev server (Turbopack) at localhost:3000
-npm run build    # production build
-npm run start    # start production server
-npm run lint     # ESLint 9 flat config (eslint.config.mjs)
+npm start    # start production server
+npm run dev  # dev server with nodemon (auto-restart)
 ```
 
-No test framework is configured.
+Both serve at `http://localhost:3000`.
 
 ## Architecture
 
-Fresh scaffold from `create-next-app`. Ready for R3F components at `src/`.
+- `app.js` — Express entry point
+- `views/` — EJS templates (partials in `views/partials/`)
+- `public/` — static assets (css, js, images)
