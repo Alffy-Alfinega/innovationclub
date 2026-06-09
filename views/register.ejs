@@ -3,7 +3,7 @@
 <section class="section form-section">
   <div class="section-header">
     <span class="section-label">Register</span>
-    <h2>Join Innovation Club.<br /><span class="blue">It's Free.</span></h2>
+    <h2>Join Innovation Club.<br /><span class="blue">A few steps away.</span></h2>
     <p class="section-desc" style="max-width:500px;margin-top:1rem">Fill in the details below to register. We'll follow up within 48 hours.</p>
   </div>
 
@@ -50,46 +50,38 @@
           <option value="">Select gender</option>
           <option value="Male" <%= form.gender === 'Male' ? 'selected' : '' %>>Male</option>
           <option value="Female" <%= form.gender === 'Female' ? 'selected' : '' %>>Female</option>
-          <option value="Other" <%= form.gender === 'Other' ? 'selected' : '' %>>Other</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="dateOfBirth">Date of Birth</label>
-        <input type="date" id="dateOfBirth" name="dateOfBirth" value="<%= form.dateOfBirth || '' %>" />
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group">
         <label for="class">Class *</label>
-        <select id="class" name="class" required>
+        <select id="class" name="class" required onchange="updateStreams()">
           <option value="">Select class</option>
           <% classes.forEach(function(c) { %>
             <option value="<%= c %>" <%= form.class === c ? 'selected' : '' %>><%= c %></option>
           <% }); %>
         </select>
       </div>
+    </div>
+
+    <div class="form-row">
       <div class="form-group">
         <label for="stream">Stream</label>
         <select id="stream" name="stream">
           <option value="">Select stream</option>
-          <% streams.forEach(function(s) { %>
-            <option value="<%= s %>" <%= form.stream === s ? 'selected' : '' %>><%= s %></option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="studentStatus">Status</label>
+        <select id="studentStatus" name="studentStatus">
+          <option value="">Select status</option>
+          <% statuses.forEach(function(s) { %>
+            <option value="<%= s %>" <%= form.studentStatus === s ? 'selected' : '' %>><%= s %></option>
           <% }); %>
         </select>
       </div>
     </div>
 
     <div class="form-row">
-      <div class="form-group">
-        <label for="section">Section</label>
-        <select id="section" name="section">
-          <option value="">Select section</option>
-          <% sections.forEach(function(s) { %>
-            <option value="<%= s %>" <%= form.section === s ? 'selected' : '' %>><%= s %></option>
-          <% }); %>
-        </select>
-      </div>
       <div class="form-group">
         <label for="termJoined">Term Joined</label>
         <select id="termJoined" name="termJoined">
@@ -99,11 +91,10 @@
           <% }); %>
         </select>
       </div>
-    </div>
-
-    <div class="form-group">
-      <label for="schoolName">School Name</label>
-      <input type="text" id="schoolName" name="schoolName" value="<%= form.schoolName || '' %>" placeholder="e.g. Makindye Secondary School" />
+      <div class="form-group">
+        <label for="schoolName">School</label>
+        <input type="text" id="schoolName" name="schoolName" value="<%= form.schoolName || school %>" readonly />
+      </div>
     </div>
 
     <div class="form-group">
@@ -138,16 +129,6 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="studentStatus">Student Status</label>
-      <select id="studentStatus" name="studentStatus">
-        <option value="">Select status</option>
-        <% statuses.forEach(function(s) { %>
-          <option value="<%= s %>" <%= form.studentStatus === s ? 'selected' : '' %>><%= s %></option>
-        <% }); %>
-      </select>
-    </div>
-
     <div class="form-group agree-group">
       <label class="checkbox-label">
         <input type="checkbox" name="agree" value="1" <%= form.agree ? 'checked' : '' %> required />
@@ -158,5 +139,25 @@
     <button type="submit" class="btn btn-primary btn-lg btn-full">Submit Registration →</button>
   </form>
 </section>
+
+<script>
+const streamMap = <%- JSON.stringify(streams) %>;
+
+function updateStreams() {
+  const cls = document.getElementById('class').value;
+  const sel = document.getElementById('stream');
+  sel.innerHTML = '<option value="">Select stream</option>';
+  if (cls && streamMap[cls]) {
+    streamMap[cls].forEach(function(s) {
+      const opt = document.createElement('option');
+      opt.value = s;
+      opt.textContent = s;
+      if ('<%= form.stream || "" %>' === s) opt.selected = true;
+      sel.appendChild(opt);
+    });
+  }
+}
+document.addEventListener('DOMContentLoaded', updateStreams);
+</script>
 
 <%- include('partials/footer') %>

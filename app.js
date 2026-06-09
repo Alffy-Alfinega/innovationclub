@@ -13,11 +13,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
-const classes = ['Form1', 'Form2', 'Form3', 'Form4', 'Form5', 'Form6'];
-const streams = ['Science', 'Arts', 'Technology', 'Business', 'General'];
+const classes = ['Form 1', 'Form 2', 'Form 3', 'Form 5'];
+const streams = { 'Form 1': ['North', 'South', 'East', 'West'], 'Form 2': ['North', 'South', 'East', 'West'], 'Form 3': ['North', 'South', 'East', 'West'], 'Form 5': ['Arts', 'Sciences'] };
 const terms = ['Term 1', 'Term 2', 'Term 3'];
-const sections = ['Junior', 'Senior', 'A-Level', 'O-Level'];
-const statuses = ['Active', 'Inactive', 'Graduated', 'Transferred'];
+const statuses = ['Day scholar', 'Boarding scholar'];
+const school = 'Makindye Secondary School';
 
 app.get('/', (req, res) => {
   res.render('index', { title: 'Innovation Club — Alffy' });
@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 app.get('/register', (req, res) => {
   res.render('register', {
     title: 'Register — Innovation Club',
-    classes, streams, terms, sections, statuses,
+    classes, streams, terms, statuses, school,
     errors: [],
     form: {},
   });
@@ -35,11 +35,9 @@ app.get('/register', (req, res) => {
 app.post('/register', async (req, res) => {
   const {
     firstName, middleName, lastName, otherName,
-    gender, dateOfBirth,
-    class: studentClass, stream, section, termJoined, schoolName,
-    email, phone,
-    innovationClub, aiClub, iscc,
-    studentStatus, agree,
+    gender, class: studentClass, stream, studentStatus,
+    termJoined, schoolName, email, phone,
+    innovationClub, aiClub, iscc, agree,
   } = req.body;
 
   const errors = [];
@@ -51,7 +49,7 @@ app.post('/register', async (req, res) => {
   if (errors.length > 0) {
     return res.render('register', {
       title: 'Register — Innovation Club',
-      classes, streams, terms, sections, statuses,
+      classes, streams, terms, statuses, school,
       errors,
       form: req.body,
     });
@@ -62,20 +60,17 @@ app.post('/register', async (req, res) => {
     await pool.query(`
       INSERT INTO students (
         student_id, first_name, middle_name, last_name, other_name,
-        gender, date_of_birth,
-        class, stream, section, term_joined, school_name,
+        gender, class, stream, student_status, term_joined, school_name,
         email, phone,
-        innovation_club, ai_club, iscc,
-        student_status
-      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
+        innovation_club, ai_club, iscc
+      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
     `, [
       studentId,
       firstName.trim(), middleName || null, lastName.trim(), otherName || null,
-      gender || null, dateOfBirth || null,
-      studentClass, stream || null, section || null, termJoined || null, schoolName || null,
+      gender || null, studentClass, stream || null, studentStatus || null,
+      termJoined || null, schoolName || 'Makindye Secondary School',
       email || null, phone || null,
       innovationClub === 'on', aiClub === 'on', iscc === 'on',
-      studentStatus || null,
     ]);
     res.render('success', {
       title: 'Registered — Innovation Club',
@@ -86,7 +81,7 @@ app.post('/register', async (req, res) => {
     errors.push('Something went wrong. Please try again.');
     res.render('register', {
       title: 'Register — Innovation Club',
-      classes, streams, terms, sections, statuses,
+      classes, streams, terms, statuses, school,
       errors,
       form: req.body,
     });
