@@ -64,3 +64,9 @@
 | Source (JS) | 2 (app.js, db.js) |
 | Static assets | 4 (css, logo, favicon) |
 | **Total** | **~16 files** |
+
+### Analysis
+- [[analysis/current-state-audit]] — Critical bugs, security gaps, missing features (2026-06-24)
+
+### Projects
+- [[projects/zayed-sustainability-prize]] — Vascular Earth Initiative, Zayed 2027 application

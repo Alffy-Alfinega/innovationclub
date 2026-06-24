@@ -1,0 +1,297 @@
+<%- include('../partials/header') %>
+
+<!-- ── HERO ── -->
+<section class="hero" style="min-height:70vh">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-vignette"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span class="tag blue">Makindye Secondary School — Kampala, Uganda</span>
+      <span class="tag gold" style="margin-left:0.5rem">Zayed Sustainability Prize 2027</span>
+    </div>
+
+    <h1>
+      <span class="line">Vascular</span>
+      <span class="line blue">Earth</span>
+      <span class="line">Initiative</span>
+    </h1>
+
+    <div class="hero-bottom">
+      <p class="hero-desc">
+        A smart underground soil nutrient and water distribution system for sustainable agriculture in dry and semi-arid regions. Developed by students of Makindye Secondary School.
+      </p>
+      <div class="hero-btns">
+        <a href="https://youtu.be/MCD9TIK_GwE" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">Watch the Demo →</a>
+        <a href="#solution" class="btn btn-outline btn-lg">How It Works</a>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-label-row">
+        <span class="dot"></span>
+        <span>Project at a Glance</span>
+      </div>
+      <div class="stats-grid">
+        <div><span class="stat-num">70%</span><p class="stat-label">Water Saved vs. Surface Irrigation</p></div>
+        <div><span class="stat-num">24/7</span><p class="stat-label">Automated Operation</p></div>
+        <div><span class="stat-num gold">$150K</span><p class="stat-label">Prize Budget Ceiling</p></div>
+        <div><span class="stat-num">ESP32</span><p class="stat-label">Core Intelligence</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── ENDORSEMENT BANNER ── -->
+<div style="background:rgba(212,168,67,0.06);border-top:1px solid rgba(212,168,67,0.2);border-bottom:1px solid rgba(212,168,67,0.2);padding:1.25rem 2rem;text-align:center">
+  <p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--gold);text-transform:uppercase;letter-spacing:0.1em;margin:0">
+    ★ Officially endorsed by Mrs. Naluwoza Christine Kiyimba — Principal, Makindye Secondary School · 5 June 2026 ★
+  </p>
+</div>
+
+<!-- ── PROBLEM ── -->
+<section class="section" id="problem">
+  <div class="section-header section-header-row">
+    <div>
+      <span class="section-label">01 / The Problem</span>
+      <h2>Uganda Is Hungry.<br /><span class="blue">We Can Fix That.</span></h2>
+    </div>
+    <div>
+      <p class="section-desc">
+        Northern Uganda and semi-arid regions across Sub-Saharan Africa face chronic food insecurity, water scarcity, and accelerating desertification. Conventional irrigation loses up to 70% of water to surface evaporation — and still depends on seasons.
+      </p>
+    </div>
+  </div>
+
+  <div class="cards cards-3">
+    <div class="card">
+      <span class="card-number">01</span>
+      <span class="card-icon">🌾</span>
+      <h3>Food Insecurity</h3>
+      <p>2,200 Ugandans die of hunger annually. Over 428,000 children and 84,000 women face active malnutrition — 24% of children under 5 are malnourished.</p>
+    </div>
+    <div class="card">
+      <span class="card-number">02</span>
+      <span class="card-icon">💧</span>
+      <h3>Water Waste</h3>
+      <p>Traditional surface irrigation loses up to 70% of water to evaporation before it reaches roots. Crops still fail in dry seasons because supply can't keep pace.</p>
+    </div>
+    <div class="card">
+      <span class="card-number">03</span>
+      <span class="card-icon">🌍</span>
+      <h3>Desertification</h3>
+      <p>Soil structural decay, surface erosion, and climate-driven aridity are turning fertile land barren across Karamoja and other regions of Uganda.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── SOLUTION ── -->
+<section class="section" id="solution" style="border-top:1px solid var(--border)">
+  <div class="section-header section-header-row">
+    <div>
+      <span class="section-label">02 / The Solution</span>
+      <h2>The Soil<br /><span class="blue">Skeleton System.</span></h2>
+    </div>
+    <div>
+      <p class="section-desc">
+        Two interlocking systems working together — an underground precision distribution network and an atmospheric conditioning tower — to reclaim arid land and make farming season-independent.
+      </p>
+    </div>
+  </div>
+
+  <!-- System 1 -->
+  <div style="margin-bottom:3rem">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+      <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--blue);text-transform:uppercase;letter-spacing:0.1em;border:1px solid rgba(44,111,237,0.3);padding:0.25rem 0.75rem;border-radius:4px">System 01</span>
+      <h3 style="font-family:var(--font-syne);font-size:1.5rem;color:var(--text)">The Soil Skeleton</h3>
+    </div>
+    <div class="cards cards-2">
+      <div class="card">
+        <span class="card-number">A</span>
+        <h3>Hexagonal Pipe Grid</h3>
+        <p>An underground hexagonal grid of carbon-coated pipes distributes water and soluble phosphate via a Venturi Injector — directly to root level. No surface evaporation. No seasonal dependency. Buried against soil weight, resistant to weather and physical damage.</p>
+      </div>
+      <div class="card">
+        <span class="card-number">B</span>
+        <h3>Adaptive Nerve Probes</h3>
+        <p>Branch-like probe structures extend from the pipe grid, creating permanent aeration tunnels and connecting to capacitive soil moisture sensors. The ESP32 core reads sensor data and opens valves precisely where the soil needs moisture — zero over-watering, zero waste.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- System 2 -->
+  <div>
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+      <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--gold);text-transform:uppercase;letter-spacing:0.1em;border:1px solid rgba(212,168,67,0.3);padding:0.25rem 0.75rem;border-radius:4px">System 02</span>
+      <h3 style="font-family:var(--font-syne);font-size:1.5rem;color:var(--text)">Hygro-Electric Conditioning Tower</h3>
+    </div>
+    <div class="card" style="max-width:720px">
+      <span class="card-number">C</span>
+      <h3>Atmospheric Heart</h3>
+      <p>A modified wind turbine generates electricity and simultaneously drives a high-pressure pump connected to a water reservoir. The pump releases fine mist carried by wind to increase local humidity and boost rainfall formation probability — without waiting for clouds. This is atmospheric conditioning that works day and night, complementing the underground system above.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── TECHNOLOGY ── -->
+<section class="section" style="border-top:1px solid var(--border)">
+  <div class="section-header section-header-row">
+    <div>
+      <span class="section-label">03 / Technology</span>
+      <h2>Smart by Design.<br /><span class="blue">Simple to Scale.</span></h2>
+    </div>
+    <div>
+      <p class="section-desc">Every component chosen for availability, durability, and the ability to function in low-resource environments across Sub-Saharan Africa.</p>
+    </div>
+  </div>
+
+  <div class="service-list">
+    <div class="service-row" style="cursor:default">
+      <div class="service-row-left">
+        <span class="service-row-num">01</span>
+        <h3>ESP32 Microcontroller</h3>
+      </div>
+      <div class="service-row-right">
+        <span class="service-row-tagline">Central intelligence — reads sensors, controls valves</span>
+      </div>
+    </div>
+    <div class="service-row" style="cursor:default">
+      <div class="service-row-left">
+        <span class="service-row-num">02</span>
+        <h3>Capacitive Soil Moisture Sensors</h3>
+      </div>
+      <div class="service-row-right">
+        <span class="service-row-tagline">Per-zone water content detection in real time</span>
+      </div>
+    </div>
+    <div class="service-row" style="cursor:default">
+      <div class="service-row-left">
+        <span class="service-row-num">03</span>
+        <h3>Venturi Injector</h3>
+      </div>
+      <div class="service-row-right">
+        <span class="service-row-tagline">Mixes soluble phosphate into water distribution line</span>
+      </div>
+    </div>
+    <div class="service-row" style="cursor:default">
+      <div class="service-row-left">
+        <span class="service-row-num">04</span>
+        <h3>Solar Panels + Battery Storage</h3>
+      </div>
+      <div class="service-row-right">
+        <span class="service-row-tagline">Off-grid power — operates without mains electricity</span>
+      </div>
+    </div>
+    <div class="service-row" style="cursor:default">
+      <div class="service-row-left">
+        <span class="service-row-num">05</span>
+        <h3>Water Filtration + Pumping System</h3>
+      </div>
+      <div class="service-row-right">
+        <span class="service-row-tagline">Adapts to any source — taps, boreholes, or tanks</span>
+      </div>
+    </div>
+    <div class="service-row" style="cursor:default">
+      <div class="service-row-left">
+        <span class="service-row-num">06</span>
+        <h3>Digital Platforms &amp; Databases</h3>
+      </div>
+      <div class="service-row-right">
+        <span class="service-row-tagline">Remote monitoring, data logging, and system control</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── IMPACT ── -->
+<section class="section" style="border-top:1px solid var(--border)">
+  <div class="section-header section-header-row">
+    <div>
+      <span class="section-label">04 / Impact</span>
+      <h2>Three Years.<br /><span class="blue">Real Change.</span></h2>
+    </div>
+    <div>
+      <p class="section-desc">First deployment at Makindye Secondary School — then scaling to Northern Uganda and semi-arid regions across Sub-Saharan Africa in collaboration with NGOs, government bodies, and farming communities.</p>
+    </div>
+  </div>
+
+  <div class="cards cards-3">
+    <div class="card">
+      <span class="card-number">Y1</span>
+      <h3>School Pilot</h3>
+      <p>Deploy and validate the Soil Skeleton system on school grounds. Measure water savings, crop output, and soil health against baseline. Refine the ESP32 control logic and probe distribution based on real field data.</p>
+    </div>
+    <div class="card">
+      <span class="card-number">Y2</span>
+      <h3>Community Scale-Up</h3>
+      <p>Expand to local farming communities in Makindye. Partner with NGOs to fund hardware. Document everything — water consumption, yield improvement, cost per hectare — to build the case for national adoption.</p>
+    </div>
+    <div class="card">
+      <span class="card-number">Y3</span>
+      <h3>Regional Deployment</h3>
+      <p>Target Northern Uganda's arid zones where food insecurity is most severe. Collaborate with government agricultural bodies. Publish open-source designs so the system can be replicated anywhere in Sub-Saharan Africa.</p>
+    </div>
+  </div>
+
+  <div class="mission-strip" style="margin-top:3rem">
+    <div class="mission-item"><span class="mission-num">70%</span><span>Less Water Used</span></div>
+    <div class="mission-item"><span class="mission-num">365</span><span>Days of Farming</span></div>
+    <div class="mission-item"><span class="mission-num">0</span><span>Seasons Required</span></div>
+    <div class="mission-item"><span class="mission-num gold">↑</span><span>Crop Output</span></div>
+  </div>
+</section>
+
+<!-- ── SCHOOL & ENDORSEMENT ── -->
+<section class="section" style="border-top:1px solid var(--border)">
+  <div class="section-header section-header-row">
+    <div>
+      <span class="section-label">05 / The School</span>
+      <h2>Makindye Secondary<br /><span class="blue">School.</span></h2>
+    </div>
+    <div>
+      <p class="section-desc">
+        1,500 students. Founded 1994. Located in Makindye, Kampala — one of Uganda's most active educational communities. The administration fully endorses this project and has authorised its submission to the Zayed Sustainability Prize.
+      </p>
+    </div>
+  </div>
+
+  <div class="cards cards-2">
+    <div class="card">
+      <span class="card-number">✓</span>
+      <h3>Official Endorsement</h3>
+      <p>This project carries the full written endorsement of <strong style="color:var(--text)">Mrs. Naluwoza Christine Kiyimba</strong>, Principal of Makindye Secondary School, stamped and signed on official school letterhead on 5 June 2026.</p>
+      <p style="margin-top:0.75rem;font-family:var(--font-mono);font-size:0.75rem;color:var(--text-faint)">makindyesecondary@gmail.com · +256 782408181</p>
+    </div>
+    <div class="card">
+      <span class="card-number">✓</span>
+      <h3>Faculty Support</h3>
+      <p>The project is supervised and supported by <strong style="color:var(--text)">Mr. Saula Isaac</strong>, faculty advisor, who has co-signed the application and takes responsibility for guiding the student team through implementation and testing.</p>
+      <p style="margin-top:0.75rem;font-family:var(--font-mono);font-size:0.75rem;color:var(--text-faint)">saulahellen@gmail.com · +256 786219758</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="section" style="border-top:1px solid var(--border)">
+  <div class="cta-box" style="flex-direction:column;gap:1.5rem;text-align:center">
+    <div>
+      <span class="section-label" style="display:block;margin-bottom:0.5rem">Watch the Vascular Earth Initiative</span>
+      <h2 style="font-size:2rem">See It in Action.</h2>
+    </div>
+    <div class="hero-btns" style="justify-content:center">
+      <a href="https://youtu.be/MCD9TIK_GwE" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">Watch Demo Video →</a>
+      <a href="/" class="btn btn-outline btn-lg">← Back to Innovation Club</a>
+    </div>
+    <p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-faint);margin-top:0.5rem">
+      An Innovation Club project · Powered by Alffy (Alfinega) · Makindye, Kampala, Uganda
+    </p>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

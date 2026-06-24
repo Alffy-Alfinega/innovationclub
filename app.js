@@ -23,6 +23,12 @@ app.get('/', (req, res) => {
   res.render('index', { title: 'Innovation Club — Alffy' });
 });
 
+// Vascular Earth Initiative — Zayed Sustainability Prize 2027 showcase page.
+// Static content only, no DB queries. Publicly accessible.
+app.get('/projects/vascular-earth', (req, res) => {
+  res.render('projects/vascular-earth', { title: 'Vascular Earth Initiative — Makindye Secondary School' });
+});
+
 app.get('/register', (req, res) => {
   res.render('register', {
     title: 'Register — Innovation Club',
