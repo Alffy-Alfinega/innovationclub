@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 
 // Vascular Earth Initiative — Zayed Sustainability Prize 2027 showcase page.
 // Static content only, no DB queries. Publicly accessible.
-app.get('/projects/vascular-earth', (req, res) => {
+app.get('/makss/zayed/soilSkeleton', (req, res) => {
   res.render('projects/vascular-earth', { title: 'Vascular Earth Initiative — Makindye Secondary School' });
 });
 

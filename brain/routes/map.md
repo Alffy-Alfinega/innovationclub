@@ -26,5 +26,5 @@ Plus: name fields (first, middle, last, other), date of birth, school name, emai
 ### `POST /register`
 Validates input, generates a UUID `student_id`, inserts into PostgreSQL, and renders success page on completion. Returns form with errors if validation fails.
 
-### `GET /projects/vascular-earth`
+### `GET /makss/zayed/soilSkeleton`
 Renders the Vascular Earth Initiative showcase page. Publicly accessible, no auth required. No DB queries — static content only.

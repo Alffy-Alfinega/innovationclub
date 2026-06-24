@@ -99,7 +99,7 @@ Shortfall plan: collaborate with NGOs and government bodies.
 
 ## Page to Build
 
-**Route:** `/projects/vascular-earth` (or `/makss/zayed`)  
+**Route:** `/makss/zayed/soilSkeleton` (or `/makss/zayed`)  
 **Purpose:** Public showcase page for the Vascular Earth Initiative / Soil Skeleton project  
 **Audience:** Zayed Prize committee, school visitors, potential NGO partners  
 **Tone:** Professional, impactful, science-forward — matches Innovation Club design system
