@@ -1,0 +1,17 @@
+-- Baseline migration — intentionally empty.
+--
+-- This Neon database predates Prisma: it was created by the old Express/EJS
+-- app and, at baseline time, contains one unrelated table (students_legacy,
+-- see scripts/00-preserve-legacy.sql) that Prisma's migration history has
+-- never tracked. Prisma refuses to run `migrate deploy` against a
+-- non-empty, untracked schema (error P3005) as a safety measure.
+--
+-- This migration is marked as already-applied via a ONE-TIME manual step
+-- (`prisma migrate resolve --applied 20260703000000_baseline_legacy_db`)
+-- run once against the real production DB — never automated into the
+-- build, because auto-resolving would be actively dangerous against a
+-- genuinely fresh/empty database (it would mark migrations "done" without
+-- ever creating the tables).
+--
+-- After this one-time bootstrap, `prisma migrate deploy` in the build
+-- script proceeds normally and permanently for every future deploy.
