@@ -18,6 +18,14 @@ declare module "next-auth" {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  // Explicit, not auto-detected — makes failures deterministic (throws
+  // clearly at startup if truly missing) instead of the intermittent
+  // MissingSecret errors seen in production (13 occurrences, 6 users,
+  // spanning every deployment today per Vercel runtime logs). Root cause
+  // is very likely AUTH_SECRET being scoped to Preview/Development only
+  // in Vercel's env var settings, not Production — verify the
+  // "Production" checkbox is ticked for that variable.
+  secret: process.env.AUTH_SECRET,
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },
   providers: [
