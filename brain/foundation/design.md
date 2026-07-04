@@ -1,42 +1,39 @@
-# Design System
+# Design System — inherited from parent brand (alffy.alfinega.com)
 
-## Colors
+Verified against the live parent site + tokens recovered from old site CSS
+(git 3f8228a). The club site is a child brand: same DNA, education-flavored.
 
-| Token | Value | Usage |
+## Tokens
+| Token | Value | Use |
 |---|---|---|
-| `--bg` | `#04040C` | Page background |
-| `--bg-nav` | `rgba(4,4,12,0.92)` | Navbar (scrolled) |
-| `--surface` | `#0A0A16` | Card/section backgrounds |
-| `--surface-2` | `#10101E` | Elevated surfaces |
-| `--border` | `#1C1C34` | Borders |
-| `--text` | `#E4E4F0` | Primary text |
-| `--text-muted` | `#CCCCEE` | Secondary text |
-| `--text-faint` | `#8A8AAA` | Subtle text |
-| `--text-dimmer` | `#7A7A9A` | Low-priority text |
-| `--blue` | `#2C6FED` | Primary accent |
-| `--blue-dim` | `#1A52C4` | Button hover/dark |
-| `--gold` | `#D4A843` | Secondary accent |
+| --bg | #04040C | page background (matches parent theme-color) |
+| --surface | #0A0A16 | cards |
+| --surface-2 | #10101E | raised cards |
+| --border | #1C1C34 | card/dividers |
+| --text | #E4E4F0 | body |
+| --text-faint | #8A8AAA | captions |
+| --blue | #2C6FED | primary accent, CTAs, ::selection |
+| --gold | #D4A843 | prize/award accents ONLY (scarcity = meaning) |
 
-## Typography
+## Type
+- Display: **Syne** (700/800) — split two-line headlines, second line blue
+- Body: **Outfit** (300–600)
+- Utility: **JetBrains Mono** — section eyebrows ("02 / The Problem"), stats, contact lines
 
-| Role | Font | Weights |
-|---|---|---|
-| Display/Headings | Syne | 400, 500, 600, 700, 800 |
-| Body | Outfit | 300, 400, 500, 600 |
-| Mono/Tags | JetBrains Mono | 400, 500 |
+## Structural language (from parent)
+- Numbered section eyebrows `NN / Label` — legitimate here: curriculum &
+  process ARE sequences
+- ✦-separated scrolling marquee of program topics
+- Stat counters row; numbered feature cards; process timeline
+- Big split-headline CTA section before footer
 
-## Background Effects
+## Signature
+The 3D hero (react-babylonjs, mandated as core identity) — everything else
+stays quiet and disciplined around it. Data-Saver fallback retained.
 
-- Three radial gradients using `rgba(44,111,237, 0.03–0.07)` pinned to corners
-- Grid overlay with `rgba(44,111,237, 0.05)` lines at 80px spacing
-
-## Component Patterns
-
-| Component | Style |
-|---|---|
-| Cards | `--surface` bg, `--border` border, 16px radius, hover lift + blue border |
-| Buttons (primary) | Blue gradient `#2C6FED → #1A52C4`, pill shape, blue glow shadow |
-| Buttons (outline) | Transparent bg, `--border` border, blue on hover |
-| Tags | Mono font, 11px, uppercase, `--tag-border` border, pill shape |
-| Service rows | Border-bottom list, hover shifts title to blue, arrow circle icon |
-| Form inputs | `--surface` bg, `--border` border, 8px radius, blue focus ring |
+## Pages
+- / — full marketing home (hero+3D, marquee, programme, why, fees, CTA)
+- /makss/zayed/soilSkeleton — Vascular Earth restored VERBATIM from git
+  3f8228a content (URL is in the official Zayed Prize application — never move it)
+- /register, /login — brand-styled
+- /dashboard/* — functional, token-aligned, NO 3D (bundle discipline)

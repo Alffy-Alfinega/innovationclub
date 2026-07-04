@@ -15,10 +15,10 @@ export default async function MentorDashboard() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-semibold">My Students</h1>
-      <p className="text-neutral-400 text-sm">Innovation Club / AI Club members at your school</p>
+      <p className="text-ink-faint text-sm">Innovation Club / AI Club members at your school</p>
       <table className="w-full text-sm border-collapse">
         <thead>
-          <tr className="text-left text-neutral-500 border-b border-neutral-800">
+          <tr className="text-left text-ink-faint border-b border-line">
             <th className="py-2 pr-4">Name</th>
             <th className="py-2 pr-4">Class</th>
             <th className="py-2 pr-4">Clubs</th>
@@ -26,7 +26,7 @@ export default async function MentorDashboard() {
         </thead>
         <tbody>
           {students.map((st) => (
-            <tr key={st.id} className="border-b border-neutral-900">
+            <tr key={st.id} className="border-b border-line/50">
               <td className="py-2 pr-4">{st.firstName} {st.lastName}</td>
               <td className="py-2 pr-4">{st.className}</td>
               <td className="py-2 pr-4">

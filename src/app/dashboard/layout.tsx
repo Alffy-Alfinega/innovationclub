@@ -22,17 +22,17 @@ export default async function DashboardLayout({
   const links = NAV_BY_ROLE[role] || [];
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white">
-      <nav className="border-b border-neutral-800 px-6 py-4 flex items-center justify-between">
+    <div className="min-h-screen ">
+      <nav className="border-b border-line px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <span className="font-semibold">Innovation Club</span>
+          <span className="font-[family-name:var(--font-display)] font-bold">Innovation Club</span>
           {links.map((l) => (
-            <Link key={l.href} href={l.href} className="text-sm text-neutral-400 hover:text-white">
+            <Link key={l.href} href={l.href} className="text-sm text-ink-faint hover:text-white">
               {l.label}
             </Link>
           ))}
         </div>
-        <div className="flex items-center gap-4 text-sm text-neutral-400">
+        <div className="flex items-center gap-4 text-sm text-ink-faint">
           <span>{session?.user.name} · {role.replace("_", " ")}</span>
           <form
             action={async () => {
