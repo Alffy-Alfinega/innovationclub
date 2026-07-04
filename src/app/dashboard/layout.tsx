@@ -18,7 +18,7 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-  const role = session?.user.role || "";
+  const role = session?.user?.role || "";
   const links = NAV_BY_ROLE[role] || [];
 
   return (
@@ -33,7 +33,7 @@ export default async function DashboardLayout({
           ))}
         </div>
         <div className="flex items-center gap-4 text-sm text-ink-faint">
-          <span>{session?.user.name} · {role.replace("_", " ")}</span>
+          <span>{session?.user?.name} · {role.replace("_", " ")}</span>
           <form
             action={async () => {
               "use server";

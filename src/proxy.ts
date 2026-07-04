@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 
+const ALL_ROLES = ["SUPER_ADMIN", "SCHOOL_ADMIN", "MENTOR", "PARENT", "BREAK_GLASS"];
+
 // Route prefix -> roles allowed. Checked in order; first match wins.
 // Anything under /dashboard not listed here falls through to "deny".
 const ROUTE_ROLES: Record<string, string[]> = {
@@ -8,10 +10,21 @@ const ROUTE_ROLES: Record<string, string[]> = {
   "/dashboard/school": ["SCHOOL_ADMIN", "SUPER_ADMIN", "BREAK_GLASS"],
   "/dashboard/mentor": ["MENTOR", "SCHOOL_ADMIN", "SUPER_ADMIN", "BREAK_GLASS"],
   "/dashboard/parent": ["PARENT", "SCHOOL_ADMIN", "SUPER_ADMIN", "BREAK_GLASS"],
+  // Exact match for the bare /dashboard index (role-routing landing page).
+  // Without this, "/dashboard" matched none of the prefixes above and the
+  // proxy let it through with ZERO auth check — a real gap, not just a
+  // missing page. Any authenticated role can hit the index; the page
+  // itself then redirects onward to the role-specific dashboard.
+  "/dashboard": ALL_ROLES,
 };
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
+
+  // Always viewable, regardless of auth state — this is where role checks
+  // above redirect TO, so it can't itself require passing a role check.
+  if (pathname === "/dashboard/denied") return NextResponse.next();
+
   const matchedPrefix = Object.keys(ROUTE_ROLES).find((p) =>
     pathname.startsWith(p)
   );

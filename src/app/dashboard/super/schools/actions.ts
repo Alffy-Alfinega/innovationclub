@@ -23,7 +23,7 @@ export async function addSchoolAction(
   // action is its own POST endpoint and must enforce its own authority.
   // Never trust that the layer above did its job.
   const session = await auth();
-  const role = session?.user.role;
+  const role = session?.user?.role;
   if (role !== "SUPER_ADMIN" && role !== "BREAK_GLASS") {
     return { errors: ["You do not have permission to add schools."] };
   }

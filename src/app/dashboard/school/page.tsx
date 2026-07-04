@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 export default async function SchoolAdminDashboard() {
   const session = await auth();
-  const schoolId = session?.user.schoolId;
+  const schoolId = session?.user?.schoolId;
   if (!schoolId) redirect("/dashboard/denied");
 
   const [school, students] = await Promise.all([

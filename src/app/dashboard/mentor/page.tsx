@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 export default async function MentorDashboard() {
   const session = await auth();
-  const schoolId = session?.user.schoolId;
+  const schoolId = session?.user?.schoolId;
   if (!schoolId) redirect("/dashboard/denied");
 
   const students = await prisma.student.findMany({
