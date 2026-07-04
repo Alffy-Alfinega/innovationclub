@@ -25,6 +25,7 @@ export default function Footer() {
         <div className="text-sm space-y-2">
           <p className="text-ink-faint font-[family-name:var(--font-mono)] text-xs uppercase tracking-wider mb-3">Quick links</p>
           <p><Link href="/#programme" className="text-ink-muted hover:text-ink">The Programme</Link></p>
+          <p><Link href="/projects" className="text-ink-muted hover:text-ink">Projects</Link></p>
           <p><Link href="/makss/zayed/soilSkeleton" className="text-ink-muted hover:text-ink">Vascular Earth Initiative</Link></p>
           <p><Link href="/register" className="text-ink-muted hover:text-ink">Register</Link></p>
           <p><Link href="/login" className="text-ink-muted hover:text-ink">Member sign in</Link></p>

@@ -37,3 +37,10 @@ stays quiet and disciplined around it. Data-Saver fallback retained.
   3f8228a content (URL is in the official Zayed Prize application — never move it)
 - /register, /login — brand-styled
 - /dashboard/* — functional, token-aligned, NO 3D (bundle discipline)
+
+## /projects (added 2026-07-04)
+Index page for all club projects. Zayed = featured flagship card linking to
+the contracted URL (/makss/zayed/soilSkeleton — NEVER moved). Honest-scope
+rule: no fake portfolio padding; future slots framed as "ships at trimester
+demo days," which is a real programme promise, not filler. Nav "Projects"
+now points to /projects (previously deep-linked the Zayed page).

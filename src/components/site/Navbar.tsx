@@ -15,7 +15,7 @@ export default function Navbar() {
           <Link href="/#programme" className="text-ink-faint hover:text-ink transition-colors hidden sm:block">
             Programme
           </Link>
-          <Link href="/makss/zayed/soilSkeleton" className="text-ink-faint hover:text-ink transition-colors hidden sm:block">
+          <Link href="/projects" className="text-ink-faint hover:text-ink transition-colors hidden sm:block">
             Projects
           </Link>
           <Link href="/login" className="text-ink-faint hover:text-ink transition-colors">
