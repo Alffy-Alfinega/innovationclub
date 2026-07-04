@@ -44,3 +44,21 @@ the contracted URL (/makss/zayed/soilSkeleton — NEVER moved). Honest-scope
 rule: no fake portfolio padding; future slots framed as "ships at trimester
 demo days," which is a real programme promise, not filler. Nav "Projects"
 now points to /projects (previously deep-linked the Zayed page).
+
+## Dashboard design system (added 2026-07-04)
+Shared components in `src/components/dashboard/`: PageHeader (eyebrow +
+title + optional subtitle), StatCard (large Syne numeral + faint label,
+`accent` prop for the primary metric only — restraint, not every card is blue),
+EmptyState (title + description + optional action, always points toward a
+next step rather than just stating absence, per copy guidance: "an empty
+screen is an invitation to act").
+
+Stats are real Prisma aggregates, not decorative placeholders — school
+counts, day/boarding scholar counts, club membership counts, per-role.
+Club badges color-coded: Innovation = brand blue, AI = gold (the one place
+outside prize/award content gold appears — deliberate, marks "special
+program" status consistently with its use elsewhere).
+
+No 3D anywhere in /dashboard — holds from the original architecture
+decision. Signature restraint principle: only ONE stat per dashboard uses
+the accent color (the headline metric), everything else stays quiet.

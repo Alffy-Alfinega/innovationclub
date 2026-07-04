@@ -1,44 +1,61 @@
 import { prisma } from "@/lib/prisma";
+import PageHeader from "@/components/dashboard/PageHeader";
+import StatCard from "@/components/dashboard/StatCard";
+import EmptyState from "@/components/dashboard/EmptyState";
 import AddSchoolForm from "./schools/AddSchoolForm";
 
 export default async function SuperAdminDashboard() {
-  const schools = await prisma.school.findMany({
-    include: { _count: { select: { students: true, users: true } } },
-    orderBy: { name: "asc" },
-  });
+  const [schools, totalStudents, totalStaff] = await Promise.all([
+    prisma.school.findMany({
+      include: { _count: { select: { students: true, users: true } } },
+      orderBy: { name: "asc" },
+    }),
+    prisma.student.count(),
+    prisma.user.count({ where: { role: { not: "SUPER_ADMIN" } } }),
+  ]);
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold">All Schools</h1>
-        <p className="text-ink-faint text-sm mt-1">
-          Cross-school view — this is the one dashboard that can see every tenant.
-        </p>
+    <div>
+      <PageHeader
+        eyebrow="Super Admin"
+        title="All Schools."
+        subtitle="Cross-school view — this is the one dashboard that can see every tenant."
+      />
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-10">
+        <StatCard label="Schools onboarded" value={schools.length} accent />
+        <StatCard label="Total students" value={totalStudents} />
+        <StatCard label="Staff accounts" value={totalStaff} />
       </div>
 
       {schools.length === 0 ? (
-        <p className="text-ink-faint text-sm">No schools onboarded yet — add the first one below.</p>
+        <EmptyState
+          title="No schools yet"
+          description="Add the first school below to start onboarding students and staff."
+        />
       ) : (
-        <table className="w-full text-sm border-collapse">
-          <thead>
-            <tr className="text-left text-ink-faint border-b border-line">
-              <th className="py-2 pr-4">School</th>
-              <th className="py-2 pr-4">Slug</th>
-              <th className="py-2 pr-4">Students</th>
-              <th className="py-2 pr-4">Staff accounts</th>
-            </tr>
-          </thead>
-          <tbody>
-            {schools.map((s) => (
-              <tr key={s.id} className="border-b border-line/50">
-                <td className="py-2 pr-4">{s.name}</td>
-                <td className="py-2 pr-4 text-ink-faint">{s.slug}</td>
-                <td className="py-2 pr-4">{s._count.students}</td>
-                <td className="py-2 pr-4">{s._count.users}</td>
+        <div className="border border-line bg-surface rounded-xl overflow-hidden mb-10">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="text-left text-ink-faint border-b border-line bg-surface-2">
+                <th className="py-3 px-5 font-medium">School</th>
+                <th className="py-3 px-5 font-medium">Slug</th>
+                <th className="py-3 px-5 font-medium">Students</th>
+                <th className="py-3 px-5 font-medium">Staff</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {schools.map((s) => (
+                <tr key={s.id} className="border-b border-line last:border-0 hover:bg-surface-2/50 transition-colors">
+                  <td className="py-3 px-5 font-medium">{s.name}</td>
+                  <td className="py-3 px-5 text-ink-faint font-[family-name:var(--font-mono)] text-xs">{s.slug}</td>
+                  <td className="py-3 px-5">{s._count.students}</td>
+                  <td className="py-3 px-5">{s._count.users}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
 
       <AddSchoolForm />
