@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─────────────────────────────────────────────
+// Tenancy
+// ─────────────────────────────────────────────
+
+model School {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique // e.g. "makindye" — used in URLs and school-scoped queries
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users    User[]
+  students Student[]
+
+  @@map("schools")
+}
+
+// ─────────────────────────────────────────────
+// Identity & roles
+// ─────────────────────────────────────────────
+
+enum Role {
+  SUPER_ADMIN  // Alfinega, cross-school, no schoolId scope
+  SCHOOL_ADMIN // scoped to one School
+  MENTOR       // scoped to one School
+  PARENT       // scoped to one School, linked to their own Student record(s) only
+  BREAK_GLASS  // emergency-only account; every use must be logged, see AuditLog
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  name          String
+  role          Role
+  school        School?   @relation(fields: [schoolId], references: [id])
+  schoolId      String?   // null only for SUPER_ADMIN and BREAK_GLASS
+  isActive      Boolean   @default(true)
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // A parent account may be linked to one or more students (siblings)
+  studentLinks  ParentStudent[]
+  auditLogs     AuditLog[]
+
+  @@index([schoolId])
+  @@map("users")
+}
+
+// Explicit join table (not a loose FK) so a parent can have multiple children
+// and a student can — in theory — have multiple guardians with portal access.
+model ParentStudent {
+  id        String  @id @default(cuid())
+  parent    User    @relation(fields: [parentId], references: [id])
+  parentId  String
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId String
+
+  @@unique([parentId, studentId])
+  @@map("parent_students")
+}
+
+// ─────────────────────────────────────────────
+// Students (carried forward from the Express app's schema, normalized)
+// ─────────────────────────────────────────────
+
+enum StudentStatus {
+  DAY_SCHOLAR
+  BOARDING_SCHOLAR
+}
+
+model Student {
+  id             String        @id @default(cuid())
+  school         School        @relation(fields: [schoolId], references: [id])
+  schoolId       String
+  firstName      String
+  middleName     String?
+  lastName       String
+  otherName      String?
+  gender         String?
+  className      String        // "Form 1", "Form 2", etc. — kept as string, see brain/database for enum discussion
+  stream         String?
+  status         StudentStatus?
+  termJoined     String?
+  email          String?
+  phone          String?
+  innovationClub Boolean       @default(false)
+  aiClub         Boolean       @default(false)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  parentLinks    ParentStudent[]
+
+  @@index([schoolId])
+  @@map("students")
+}
+
+// ─────────────────────────────────────────────
+// Audit — mandatory for BREAK_GLASS, useful for everyone
+// ─────────────────────────────────────────────
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  action    String   // e.g. "BREAK_GLASS_LOGIN", "STUDENT_UPDATE", "STUDENT_DELETE"
+  detail    Json?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@map("audit_logs")
+}
