@@ -26,6 +26,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   // in Vercel's env var settings, not Production — verify the
   // "Production" checkbox is ticked for that variable.
   secret: process.env.AUTH_SECRET,
+  // Required for custom domains (innovate.alfinega.com is not *.vercel.app).
+  // Without this, Auth.js's UntrustedHost check can fail inside src/proxy.ts
+  // — and when it does, auth() can't verify ANY session, so the proxy
+  // treats every request as unauthenticated regardless of a valid login
+  // cookie. This is the most likely explanation for "login succeeds, then
+  // /dashboard shows the login page again": the login Server Action (Node
+  // runtime, same-origin request) may not hit this check the same way the
+  // proxy's cross-cutting middleware check does.
+  trustHost: true,
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },
   providers: [
