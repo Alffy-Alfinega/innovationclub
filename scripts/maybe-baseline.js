@@ -13,16 +13,28 @@
 const { Client } = require("pg");
 const { execSync } = require("child_process");
 
+// Force explicit verify-full SSL for real (non-local) hosts. This is the
+// fix for the pg-connection-string deprecation warning seen in the build
+// log ("'require' aliased to 'verify-full'... will change in pg v9") —
+// rather than silence the warning, this makes the currently-implied
+// behavior explicit and permanent. It also replaces what was previously
+// `ssl: { rejectUnauthorized: false }` here, which disabled certificate
+// verification outright — a real weakening introduced under time pressure,
+// not something to leave in place just because it "worked."
+function withVerifiedSsl(url) {
+  if (!url || /localhost|127\.0\.0\.1/.test(url)) return url; // local test DBs have no cert to verify
+  return /sslmode=/.test(url)
+    ? url.replace(/sslmode=[^&]+/, "sslmode=verify-full")
+    : url + (url.includes("?") ? "&" : "?") + "sslmode=verify-full";
+}
+
 async function main() {
   if (process.env.RUN_LEGACY_BASELINE !== "yes-run-once") {
     console.log("[baseline] RUN_LEGACY_BASELINE not set — skipping (normal for every deploy).");
     return;
   }
 
-  const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
-  });
+  const client = new Client({ connectionString: withVerifiedSsl(process.env.DATABASE_URL) });
   await client.connect();
 
   // Idempotency guard: check real state, not just the env var.
