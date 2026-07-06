@@ -62,3 +62,18 @@ program" status consistently with its use elsewhere).
 No 3D anywhere in /dashboard — holds from the original architecture
 decision. Signature restraint principle: only ONE stat per dashboard uses
 the accent color (the headline metric), everything else stays quiet.
+
+## Sidebar dashboard shell (added 2026-07-04)
+Replaced the top-nav-only layout with a real two-column shell:
+`src/components/dashboard/Sidebar.tsx` (client component — active-route
+highlighting via usePathname, role avatar, per-link icons keyed by
+destination not viewer role since BREAK_GLASS has 2 distinct links),
+desktop fixed rail (w-64, sticky), mobile drawer with overlay + hamburger
+toggle. `src/app/dashboard/layout.tsx` passes the sign-out server action
+down as a prop (Next.js supports this — server actions are serializable).
+
+Added StudentTable.tsx as a real feature, not just restyling: client-side
+search/filter by name or class on the school dashboard's student list —
+the one table that can realistically grow past a glance-able size.
+
+Icons via lucide-react (added as a new dependency).

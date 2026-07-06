@@ -1,7 +1,7 @@
 import { auth, signOut } from "@/lib/auth";
-import Link from "next/link";
+import Sidebar, { type NavLink } from "@/components/dashboard/Sidebar";
 
-const NAV_BY_ROLE: Record<string, { href: string; label: string }[]> = {
+const NAV_BY_ROLE: Record<string, NavLink[]> = {
   SUPER_ADMIN: [{ href: "/dashboard/super", label: "All Schools" }],
   SCHOOL_ADMIN: [{ href: "/dashboard/school", label: "My School" }],
   MENTOR: [{ href: "/dashboard/mentor", label: "My Students" }],
@@ -19,32 +19,22 @@ export default async function DashboardLayout({
 }) {
   const session = await auth();
   const role = session?.user?.role || "";
-  const links = NAV_BY_ROLE[role] || [];
+  const navLinks = NAV_BY_ROLE[role] || [];
+
+  async function signOutAction() {
+    "use server";
+    await signOut({ redirectTo: "/login" });
+  }
 
   return (
-    <div className="min-h-screen ">
-      <nav className="border-b border-line px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-6">
-          <span className="font-[family-name:var(--font-display)] font-bold">Innovation Club</span>
-          {links.map((l) => (
-            <Link key={l.href} href={l.href} className="text-sm text-ink-faint hover:text-white">
-              {l.label}
-            </Link>
-          ))}
-        </div>
-        <div className="flex items-center gap-4 text-sm text-ink-faint">
-          <span>{session?.user?.name} · {role.replace("_", " ")}</span>
-          <form
-            action={async () => {
-              "use server";
-              await signOut({ redirectTo: "/login" });
-            }}
-          >
-            <button className="hover:text-white">Sign out</button>
-          </form>
-        </div>
-      </nav>
-      <main className="p-6">{children}</main>
+    <div className="min-h-screen flex">
+      <Sidebar
+        role={role}
+        userName={session?.user?.name || ""}
+        navLinks={navLinks}
+        signOutAction={signOutAction}
+      />
+      <main className="flex-1 min-w-0 p-6 md:p-8">{children}</main>
     </div>
   );
 }
