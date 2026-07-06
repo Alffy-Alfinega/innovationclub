@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
   Building2,
+  UserCog,
   GraduationCap,
   Users,
   UserCircle,
@@ -25,6 +26,7 @@ const ROLE_ICON: Record<string, React.ElementType> = {
 
 const LINK_ICON: Record<string, React.ElementType> = {
   "/dashboard/super": Building2,
+  "/dashboard/super/users": UserCog,
   "/dashboard/school": GraduationCap,
   "/dashboard/mentor": Users,
   "/dashboard/parent": UserCircle,

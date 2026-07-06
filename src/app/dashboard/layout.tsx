@@ -2,12 +2,16 @@ import { auth, signOut } from "@/lib/auth";
 import Sidebar, { type NavLink } from "@/components/dashboard/Sidebar";
 
 const NAV_BY_ROLE: Record<string, NavLink[]> = {
-  SUPER_ADMIN: [{ href: "/dashboard/super", label: "All Schools" }],
+  SUPER_ADMIN: [
+    { href: "/dashboard/super", label: "All Schools" },
+    { href: "/dashboard/super/users", label: "Users" },
+  ],
   SCHOOL_ADMIN: [{ href: "/dashboard/school", label: "My School" }],
   MENTOR: [{ href: "/dashboard/mentor", label: "My Students" }],
   PARENT: [{ href: "/dashboard/parent", label: "My Child" }],
   BREAK_GLASS: [
     { href: "/dashboard/super", label: "All Schools" },
+    { href: "/dashboard/super/users", label: "Users" },
     { href: "/dashboard/school", label: "School View" },
   ],
 };
