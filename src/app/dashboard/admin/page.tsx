@@ -12,13 +12,13 @@ export default async function SuperAdminDashboard() {
       orderBy: { name: "asc" },
     }),
     prisma.student.count(),
-    prisma.user.count({ where: { role: { not: "SUPER_ADMIN" } } }),
+    prisma.user.count({ where: { role: { not: "ADMIN" } } }),
   ]);
 
   return (
     <div>
       <PageHeader
-        eyebrow="Super Admin"
+        eyebrow="Admin"
         title="All Schools."
         subtitle="Cross-school view — this is the one dashboard that can see every tenant."
       />

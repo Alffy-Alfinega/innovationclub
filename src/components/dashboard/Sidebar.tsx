@@ -17,19 +17,19 @@ import {
 } from "lucide-react";
 
 const ROLE_ICON: Record<string, React.ElementType> = {
-  SUPER_ADMIN: Building2,
-  SCHOOL_ADMIN: GraduationCap,
-  MENTOR: Users,
-  PARENT: UserCircle,
+  ADMIN: Building2,
+  SYSTEM_OPERATOR: GraduationCap,
+  PATRON: Users,
+  STUDENT: UserCircle,
   BREAK_GLASS: ShieldAlert,
 };
 
 const LINK_ICON: Record<string, React.ElementType> = {
-  "/dashboard/super": Building2,
-  "/dashboard/super/users": UserCog,
-  "/dashboard/school": GraduationCap,
-  "/dashboard/mentor": Users,
-  "/dashboard/parent": UserCircle,
+  "/dashboard/admin": Building2,
+  "/dashboard/admin/users": UserCog,
+  "/dashboard/operator": GraduationCap,
+  "/dashboard/patron": Users,
+  "/dashboard/student": UserCircle,
 };
 
 export type NavLink = { href: string; label: string };

@@ -29,11 +29,11 @@ model School {
 // ─────────────────────────────────────────────
 
 enum Role {
-  SUPER_ADMIN  // Alfinega, cross-school, no schoolId scope
-  SCHOOL_ADMIN // scoped to one School
-  MENTOR       // scoped to one School
-  PARENT       // scoped to one School, linked to their own Student record(s) only
-  BREAK_GLASS  // emergency-only account; every use must be logged, see AuditLog
+  ADMIN            // was SUPER_ADMIN — Alfinega, cross-school, no schoolId scope
+  SYSTEM_OPERATOR  // was SCHOOL_ADMIN — scoped to one School
+  PATRON           // was MENTOR — scoped to one School (Ugandan school-club terminology: the staff member who supervises a club)
+  STUDENT          // was PARENT — scoped to one School; the student's OWN login, not a guardian's
+  BREAK_GLASS      // emergency-only account; every use must be logged, see AuditLog
 }
 
 model User {
@@ -50,7 +50,7 @@ model User {
   updatedAt     DateTime  @updatedAt
 
   // A parent account may be linked to one or more students (siblings)
-  studentLinks  ParentStudent[]
+  studentLinks  StudentLink[]
   auditLogs     AuditLog[]
 
   @@index([schoolId])
@@ -59,15 +59,21 @@ model User {
 
 // Explicit join table (not a loose FK) so a parent can have multiple children
 // and a student can — in theory — have multiple guardians with portal access.
-model ParentStudent {
+// Links a STUDENT-role account to their own Student record. Kept as an
+// explicit join (not a 1:1 FK) so the shape can support future cases —
+// e.g. a sibling pair, or reintroducing guardian access later — without
+// another schema migration. Named/renamed 2026-07-06 when the role
+// changed from PARENT (guardian-monitoring) to STUDENT (self-access):
+// was ParentStudent.parentId, now StudentLink.userId.
+model StudentLink {
   id        String  @id @default(cuid())
-  parent    User    @relation(fields: [parentId], references: [id])
-  parentId  String
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
   student   Student @relation(fields: [studentId], references: [id])
   studentId String
 
-  @@unique([parentId, studentId])
-  @@map("parent_students")
+  @@unique([userId, studentId])
+  @@map("student_links")
 }
 
 // ─────────────────────────────────────────────
@@ -99,7 +105,7 @@ model Student {
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 
-  parentLinks    ParentStudent[]
+  linkedUsers    StudentLink[]
 
   @@index([schoolId])
   @@map("students")

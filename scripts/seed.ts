@@ -1,5 +1,11 @@
 /**
- * STEP 2 — seed the first school and the first SUPER_ADMIN.
+ * STEP 2 — seed the first school and the first ADMIN account.
+ *
+ * Env var NAMES below are kept as SUPER_ADMIN_* deliberately, even though
+ * the Role enum value is now "ADMIN" (renamed 2026-07-06) — these vars
+ * are already configured in production Vercel settings from before the
+ * rename, and RUN_SEED is designed to be safely re-triggerable. Renaming
+ * the env vars too would silently break a future re-run if left set.
  * Run AFTER `prisma migrate dev` has applied the schema.
  *
  *   SUPER_ADMIN_EMAIL=... SUPER_ADMIN_PASSWORD=... SUPER_ADMIN_NAME="Nashif Mulo" \
@@ -19,7 +25,7 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   const email = process.env.SUPER_ADMIN_EMAIL;
   const password = process.env.SUPER_ADMIN_PASSWORD;
-  const name = process.env.SUPER_ADMIN_NAME || "Super Admin";
+  const name = process.env.SUPER_ADMIN_NAME || "Admin";
 
   if (!email || !password) {
     throw new Error(
@@ -49,7 +55,7 @@ async function main() {
   } else {
     const passwordHash = await bcrypt.hash(password, 12);
     const admin = await prisma.user.create({
-      data: { email, passwordHash, name, role: "SUPER_ADMIN", schoolId: null },
+      data: { email, passwordHash, name, role: "ADMIN", schoolId: null },
     });
     console.log(`Super admin created: ${admin.email} (${admin.id})`);
   }

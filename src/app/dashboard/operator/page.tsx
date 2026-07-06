@@ -6,7 +6,7 @@ import StatCard from "@/components/dashboard/StatCard";
 import EmptyState from "@/components/dashboard/EmptyState";
 import StudentTable from "@/components/dashboard/StudentTable";
 
-export default async function SchoolAdminDashboard() {
+export default async function SystemOperatorDashboard() {
   const session = await auth();
   const schoolId = session?.user?.schoolId;
   if (!schoolId) redirect("/dashboard/denied");
@@ -21,7 +21,7 @@ export default async function SchoolAdminDashboard() {
 
   return (
     <div>
-      <PageHeader eyebrow="School Admin" title={`${school?.name ?? "My School"}.`} />
+      <PageHeader eyebrow="System Operator" title={`${school?.name ?? "My School"}.`} />
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
         <StatCard label="Total students" value={students.length} accent />

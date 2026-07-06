@@ -5,7 +5,7 @@ import PageHeader from "@/components/dashboard/PageHeader";
 import StatCard from "@/components/dashboard/StatCard";
 import EmptyState from "@/components/dashboard/EmptyState";
 
-export default async function MentorDashboard() {
+export default async function PatronDashboard() {
   const session = await auth();
   const schoolId = session?.user?.schoolId;
   if (!schoolId) redirect("/dashboard/denied");
@@ -21,7 +21,7 @@ export default async function MentorDashboard() {
 
   return (
     <div>
-      <PageHeader eyebrow="Mentor" title="My Students." subtitle="Innovation Club / AI Club members at your school." />
+      <PageHeader eyebrow="Patron" title="My Students." subtitle="Innovation Club / AI Club members at your school." />
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-10">
         <StatCard label="Total club members" value={students.length} accent />

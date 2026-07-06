@@ -24,7 +24,7 @@ export async function addSchoolAction(
   // Never trust that the layer above did its job.
   const session = await auth();
   const role = session?.user?.role;
-  if (role !== "SUPER_ADMIN" && role !== "BREAK_GLASS") {
+  if (role !== "ADMIN" && role !== "BREAK_GLASS") {
     return { errors: ["You do not have permission to add schools."] };
   }
 
@@ -71,7 +71,7 @@ export async function updateSchoolAction(
 ): Promise<AddSchoolState> {
   const session = await auth();
   const role = session?.user?.role;
-  if (role !== "SUPER_ADMIN" && role !== "BREAK_GLASS") {
+  if (role !== "ADMIN" && role !== "BREAK_GLASS") {
     return { errors: ["You do not have permission to edit schools."] };
   }
 
@@ -124,7 +124,7 @@ export async function deleteSchoolAction(
 ): Promise<AddSchoolState> {
   const session = await auth();
   const role = session?.user?.role;
-  if (role !== "SUPER_ADMIN" && role !== "BREAK_GLASS") {
+  if (role !== "ADMIN" && role !== "BREAK_GLASS") {
     return { errors: ["You do not have permission to delete schools."] };
   }
 

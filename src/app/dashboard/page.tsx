@@ -6,11 +6,11 @@ import { redirect } from "next/navigation";
 // specific dashboard page). This page's only job is to send each role to
 // its actual home — it renders nothing itself.
 const ROLE_HOME: Record<string, string> = {
-  SUPER_ADMIN: "/dashboard/super",
-  SCHOOL_ADMIN: "/dashboard/school",
-  MENTOR: "/dashboard/mentor",
-  PARENT: "/dashboard/parent",
-  BREAK_GLASS: "/dashboard/super",
+  ADMIN: "/dashboard/admin",
+  SYSTEM_OPERATOR: "/dashboard/operator",
+  PATRON: "/dashboard/patron",
+  STUDENT: "/dashboard/student",
+  BREAK_GLASS: "/dashboard/admin",
 };
 
 export default async function DashboardIndex() {

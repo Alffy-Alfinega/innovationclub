@@ -20,8 +20,8 @@ export type UserRow = {
   lastLogin: string; // preformatted server-side
 };
 
-const ROLES = ["SUPER_ADMIN", "SCHOOL_ADMIN", "MENTOR", "PARENT", "BREAK_GLASS"];
-const SCHOOL_SCOPED = new Set(["SCHOOL_ADMIN", "MENTOR", "PARENT"]);
+const ROLES = ["ADMIN", "SYSTEM_OPERATOR", "PATRON", "STUDENT", "BREAK_GLASS"];
+const SCHOOL_SCOPED = new Set(["SYSTEM_OPERATOR", "PATRON", "STUDENT"]);
 const initial: UserActionState = { errors: [] };
 
 const field =
@@ -106,7 +106,7 @@ function CreateUserForm({ schools }: { schools: SchoolOption[] }) {
           <input id="new-email" name="email" type="email" required className={field} />
         </div>
       </div>
-      <RoleSchoolFields defaultRole="SCHOOL_ADMIN" defaultSchoolId="" schools={schools} idPrefix="new" />
+      <RoleSchoolFields defaultRole="SYSTEM_OPERATOR" defaultSchoolId="" schools={schools} idPrefix="new" />
       <div>
         <label className={label} htmlFor="new-password">Initial password * (12+ characters — share it with the person privately; they should not reuse it elsewhere)</label>
         <input id="new-password" name="password" type="password" required minLength={12} className={field} />

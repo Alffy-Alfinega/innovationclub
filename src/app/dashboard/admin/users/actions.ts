@@ -6,9 +6,9 @@ import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const ROLES = ["SUPER_ADMIN", "SCHOOL_ADMIN", "MENTOR", "PARENT", "BREAK_GLASS"] as const;
+const ROLES = ["ADMIN", "SYSTEM_OPERATOR", "PATRON", "STUDENT", "BREAK_GLASS"] as const;
 type RoleValue = (typeof ROLES)[number];
-const SCHOOL_SCOPED: RoleValue[] = ["SCHOOL_ADMIN", "MENTOR", "PARENT"];
+const SCHOOL_SCOPED: RoleValue[] = ["SYSTEM_OPERATOR", "PATRON", "STUDENT"];
 
 export type UserActionState = { errors: string[]; success?: string };
 
@@ -19,7 +19,7 @@ async function requireSuperAdmin(): Promise<
 > {
   const session = await auth();
   const role = session?.user?.role;
-  if (role !== "SUPER_ADMIN" && role !== "BREAK_GLASS") {
+  if (role !== "ADMIN" && role !== "BREAK_GLASS") {
     return { ok: false, state: { errors: ["You do not have permission to manage users."] } };
   }
   return { ok: true, actorId: session!.user.id };
@@ -116,15 +116,15 @@ export async function updateUserAction(
     const target = await prisma.user.findUnique({ where: { id: userId } });
     if (!target) return { errors: ["User not found."] };
 
-    // Lockout rail: never allow demoting the LAST active SUPER_ADMIN.
+    // Lockout rail: never allow demoting the LAST active ADMIN.
     // With no PC/CLI access, a locked-out platform is unrecoverable
     // without database surgery this user cannot perform.
-    if (target.role === "SUPER_ADMIN" && role !== "SUPER_ADMIN") {
+    if (target.role === "ADMIN" && role !== "ADMIN") {
       const otherSupers = await prisma.user.count({
-        where: { role: "SUPER_ADMIN", isActive: true, id: { not: target.id } },
+        where: { role: "ADMIN", isActive: true, id: { not: target.id } },
       });
       if (otherSupers === 0) {
-        return { errors: ["This is the last active super admin — demoting it would lock everyone out. Create another super admin first."] };
+        return { errors: ["This is the last active admin — demoting it would lock everyone out. Create another admin first."] };
       }
     }
 
@@ -181,12 +181,12 @@ export async function setUserActiveAction(
       if (target.id === gate.actorId) {
         return { errors: ["You cannot deactivate your own account."] };
       }
-      if (target.role === "SUPER_ADMIN") {
+      if (target.role === "ADMIN") {
         const otherSupers = await prisma.user.count({
-          where: { role: "SUPER_ADMIN", isActive: true, id: { not: target.id } },
+          where: { role: "ADMIN", isActive: true, id: { not: target.id } },
         });
         if (otherSupers === 0) {
-          return { errors: ["This is the last active super admin — deactivating it would lock everyone out."] };
+          return { errors: ["This is the last active admin — deactivating it would lock everyone out."] };
         }
       }
     }

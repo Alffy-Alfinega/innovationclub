@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 
-const ALL_ROLES = ["SUPER_ADMIN", "SCHOOL_ADMIN", "MENTOR", "PARENT", "BREAK_GLASS"];
+const ALL_ROLES = ["ADMIN", "SYSTEM_OPERATOR", "PATRON", "STUDENT", "BREAK_GLASS"];
 
 // Route prefix -> roles allowed. Checked in order; first match wins.
 // Anything under /dashboard not listed here falls through to "deny".
 const ROUTE_ROLES: Record<string, string[]> = {
-  "/dashboard/super": ["SUPER_ADMIN", "BREAK_GLASS"],
-  "/dashboard/school": ["SCHOOL_ADMIN", "SUPER_ADMIN", "BREAK_GLASS"],
-  "/dashboard/mentor": ["MENTOR", "SCHOOL_ADMIN", "SUPER_ADMIN", "BREAK_GLASS"],
-  "/dashboard/parent": ["PARENT", "SCHOOL_ADMIN", "SUPER_ADMIN", "BREAK_GLASS"],
+  "/dashboard/admin": ["ADMIN", "BREAK_GLASS"],
+  "/dashboard/operator": ["SYSTEM_OPERATOR", "ADMIN", "BREAK_GLASS"],
+  "/dashboard/patron": ["PATRON", "SYSTEM_OPERATOR", "ADMIN", "BREAK_GLASS"],
+  "/dashboard/student": ["STUDENT", "SYSTEM_OPERATOR", "ADMIN", "BREAK_GLASS"],
   // Exact match for the bare /dashboard index (role-routing landing page).
   // Without this, "/dashboard" matched none of the prefixes above and the
   // proxy let it through with ZERO auth check — a real gap, not just a
@@ -47,9 +47,9 @@ export default auth((req) => {
   // this is the multi-tenancy boundary enforced at the edge, not hoped-for
   // in every individual query.
   if (
-    session.user.role !== "SUPER_ADMIN" &&
+    session.user.role !== "ADMIN" &&
     session.user.role !== "BREAK_GLASS" &&
-    matchedPrefix === "/dashboard/school"
+    matchedPrefix === "/dashboard/operator"
   ) {
     const requestedSchool = req.nextUrl.searchParams.get("school");
     if (requestedSchool && requestedSchool !== session.user.schoolId) {

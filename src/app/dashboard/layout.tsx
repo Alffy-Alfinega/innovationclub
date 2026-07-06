@@ -2,17 +2,17 @@ import { auth, signOut } from "@/lib/auth";
 import Sidebar, { type NavLink } from "@/components/dashboard/Sidebar";
 
 const NAV_BY_ROLE: Record<string, NavLink[]> = {
-  SUPER_ADMIN: [
-    { href: "/dashboard/super", label: "All Schools" },
-    { href: "/dashboard/super/users", label: "Users" },
+  ADMIN: [
+    { href: "/dashboard/admin", label: "All Schools" },
+    { href: "/dashboard/admin/users", label: "Users" },
   ],
-  SCHOOL_ADMIN: [{ href: "/dashboard/school", label: "My School" }],
-  MENTOR: [{ href: "/dashboard/mentor", label: "My Students" }],
-  PARENT: [{ href: "/dashboard/parent", label: "My Child" }],
+  SYSTEM_OPERATOR: [{ href: "/dashboard/operator", label: "My School" }],
+  PATRON: [{ href: "/dashboard/patron", label: "My Students" }],
+  STUDENT: [{ href: "/dashboard/student", label: "My Profile" }],
   BREAK_GLASS: [
-    { href: "/dashboard/super", label: "All Schools" },
-    { href: "/dashboard/super/users", label: "Users" },
-    { href: "/dashboard/school", label: "School View" },
+    { href: "/dashboard/admin", label: "All Schools" },
+    { href: "/dashboard/admin/users", label: "Users" },
+    { href: "/dashboard/operator", label: "School View" },
   ],
 };
 
@@ -31,7 +31,7 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex flex-col md:flex-row">
       <Sidebar
         role={role}
         userName={session?.user?.name || ""}
