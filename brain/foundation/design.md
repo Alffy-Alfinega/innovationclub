@@ -77,3 +77,11 @@ search/filter by name or class on the school dashboard's student list —
 the one table that can realistically grow past a glance-able size.
 
 Icons via lucide-react (added as a new dependency).
+
+## Sidebar nav flattened (2026-07-08)
+Per explicit request: no more visually-separate "shared" bottom block.
+Role-specific links + Account/Lessons/Back-to-site now render as ONE
+continuous nav list at the top; only Sign Out remains pinned to the
+bottom (border-t, separate from the scrollable nav above). Profile
+renamed to Account throughout — folder, route, page title, component —
+avoiding a label/URL mismatch.

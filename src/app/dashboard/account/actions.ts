@@ -41,7 +41,7 @@ export async function updateProfileAction(
       },
     });
 
-    revalidatePath("/dashboard/profile");
+    revalidatePath("/dashboard/account");
     return { errors: [], success: newPassword ? "Profile and password updated." : "Profile updated." };
   } catch (err) {
     console.error("[updateProfile] failed:", err);

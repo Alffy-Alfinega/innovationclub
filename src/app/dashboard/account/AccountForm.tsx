@@ -8,7 +8,7 @@ const field =
   "w-full mt-1 rounded-md bg-surface-2 border border-line px-3 py-2 text-sm focus:border-brand outline-none transition-colors";
 const label = "text-xs text-ink-faint";
 
-export default function ProfileForm({ name, email }: { name: string; email: string }) {
+export default function AccountForm({ name, email }: { name: string; email: string }) {
   const [state, formAction, pending] = useActionState(updateProfileAction, initial);
 
   return (

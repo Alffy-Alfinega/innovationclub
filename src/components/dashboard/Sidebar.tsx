@@ -36,9 +36,21 @@ const LINK_ICON: Record<string, React.ElementType> = {
   "/dashboard/operator": GraduationCap,
   "/dashboard/patron": Users,
   "/dashboard/student": UserCircle,
+  "/dashboard/account": CircleUserRound,
+  "/lessons": BookOpen,
+  "/": ArrowLeft,
 };
 
 export type NavLink = { href: string; label: string };
+
+// Shared across every role — appended after the role-specific links so
+// the whole thing reads as one continuous nav, not a role section plus a
+// separate fixed block. Only Sign Out stays pinned to the bottom.
+const SHARED_LINKS: NavLink[] = [
+  { href: "/dashboard/account", label: "Account" },
+  { href: "/lessons", label: "Lessons" },
+  { href: "/", label: "Back to site" },
+];
 
 export default function Sidebar({
   role,
@@ -54,6 +66,7 @@ export default function Sidebar({
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const RoleIcon = ROLE_ICON[role] ?? Users;
+  const allLinks = [...navLinks, ...SHARED_LINKS];
 
   const content = (
     <div className="flex flex-col h-full">
@@ -75,8 +88,11 @@ export default function Sidebar({
         </div>
       </div>
 
-      <nav className="flex-1 px-3 py-4 space-y-1">
-        {navLinks.map((link) => {
+      {/* One continuous nav: role-specific links, then Account/Lessons/
+          Back to site. No visual break between them — this IS the "align
+          the navigation" fix. */}
+      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+        {allLinks.map((link) => {
           const active = pathname === link.href;
           const LinkIcon = LINK_ICON[link.href] ?? RoleIcon;
           return (
@@ -97,33 +113,8 @@ export default function Sidebar({
         })}
       </nav>
 
-      <div className="px-3 py-4 border-t border-line space-y-1">
-        <Link
-          href="/dashboard/profile"
-          onClick={() => setMobileOpen(false)}
-          className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${
-            pathname === "/dashboard/profile"
-              ? "bg-brand/10 text-brand border border-brand/20"
-              : "text-ink-faint hover:text-ink hover:bg-surface-2"
-          }`}
-        >
-          <CircleUserRound size={16} />
-          Profile
-        </Link>
-        <Link
-          href="/lessons"
-          className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-ink-faint hover:text-ink hover:bg-surface-2 transition-colors"
-        >
-          <BookOpen size={16} />
-          Lessons
-        </Link>
-        <Link
-          href="/"
-          className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-ink-faint hover:text-ink hover:bg-surface-2 transition-colors"
-        >
-          <ArrowLeft size={16} />
-          Back to site
-        </Link>
+      {/* Only Sign Out lives here now — everything else moved up top. */}
+      <div className="px-3 py-4 border-t border-line">
         <form action={signOutAction}>
           <button className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-ink-faint hover:text-ink hover:bg-surface-2 transition-colors">
             <LogOut size={16} />
