@@ -50,3 +50,19 @@ User agreed via follow-up, no pushback.
 tsc 0, eslint 0, 20-route build green, live redirect test on all 3 new
 gated routes + /lessons (200) + /projects (200, confirmed graceful
 degradation under the same DB failure that used to 500 it)
+
+## Addendum — Lessons nav link was silently never added
+Caught by fetching the actual live page instead of trusting the earlier
+commit message: the Navbar edit for "Lessons" used a Python string-replace
+targeting an href that a PRIOR turn had already changed (`/makss/zayed/soilSkeleton`
+→ `/projects`, done when the /projects page was first built). Since that
+string no longer existed, `.replace()` matched nothing and silently
+returned the file unchanged — no error, no warning, just a no-op. The
+commit and push both "succeeded" with nothing actually different.
+Same failure class as the sh brace-expansion bug and the unkeyed Fragment
+earlier this session: an edit that looks correct in isolation but was
+never verified against the actual resulting file.
+Fixed with a direct str_replace against the real current content
+(confirmed via grep before AND after). Lesson: after any edit, grep the
+target file for the expected result — don't infer success from the edit
+command completing without error.

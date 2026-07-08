@@ -15,6 +15,9 @@ export default function Navbar() {
           <Link href="/#programme" className="text-ink-faint hover:text-ink transition-colors hidden sm:block">
             Programme
           </Link>
+          <Link href="/lessons" className="text-ink-faint hover:text-ink transition-colors hidden sm:block">
+            Lessons
+          </Link>
           <Link href="/projects" className="text-ink-faint hover:text-ink transition-colors hidden sm:block">
             Projects
           </Link>
