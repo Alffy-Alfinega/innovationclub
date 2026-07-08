@@ -61,3 +61,31 @@ maybe-seed (env-gated, non-fatal) → next build
 - Self-service password change / forced reset on first login
 - Parent↔student linking UI (schema ready via ParentStudent)
 - Mentor/parent write features; email confirmation on registration
+
+## Gallery + Lessons (added 2026-07-08, per user decisions)
+- **Gallery**: real `Project` model (title, url, description?, trimester,
+  studentNames free-text, schoolId, createdByUserId). Starts EMPTY —
+  populated as real demo-day projects ship, not backfilled with fakes.
+  Admin CRUD first (consistent with "start with superuser" precedent from
+  the earlier user/school CRUD work); Patron/Operator school-scoped access
+  is the natural next step, not built this round.
+  Public `/projects` page now queries real Project rows into the "what
+  ships next" section — replaces the static honest-placeholder with
+  actual growing content over time, while keeping an honest empty state
+  if a school has shipped nothing yet.
+- **Lessons**: per-trimester TOPIC breakdown (user explicitly said NOT
+  full session materials, NOT just the high-level 6-line overview
+  already on the homepage — a middle layer). Trimester 1 topics drawn
+  from documented curriculum specifics already in memory (CPU/RAM
+  reframes, Excel IF/charts, file-path-as-repo-discipline, etc.);
+  Trimesters 2-6 use standard, defensible topic breakdowns for their
+  already-named themes (e.g. "Web Foundations" → HTML/CSS/responsive/
+  Git/GitHub Pages) since this is instructor-authored curriculum
+  structure, not fabricated user data — different category from an
+  empty leaderboard. Built as a public page `/lessons` (curriculum
+  content isn't sensitive) linked from nav + homepage + dashboard
+  sidebar, not duplicated per-role.
+- **Explicitly declined**: Leaderboards, Practice (competitive-coding-
+  platform features with no scoring system or problem bank behind them,
+  and a poor philosophical fit for a beginner-focused club) — will build
+  if a real scoring source is defined.

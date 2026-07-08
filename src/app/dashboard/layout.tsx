@@ -5,6 +5,8 @@ const NAV_BY_ROLE: Record<string, NavLink[]> = {
   ADMIN: [
     { href: "/dashboard/admin", label: "All Schools" },
     { href: "/dashboard/admin/users", label: "Users" },
+    { href: "/dashboard/admin/gallery", label: "Gallery" },
+    { href: "/dashboard/admin/activity", label: "Activity" },
   ],
   SYSTEM_OPERATOR: [{ href: "/dashboard/operator", label: "My School" }],
   PATRON: [{ href: "/dashboard/patron", label: "My Students" }],

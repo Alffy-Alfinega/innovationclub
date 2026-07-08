@@ -20,6 +20,7 @@ model School {
 
   users    User[]
   students Student[]
+  projects Project[]
 
   @@map("schools")
 }
@@ -52,6 +53,7 @@ model User {
   // A parent account may be linked to one or more students (siblings)
   studentLinks  StudentLink[]
   auditLogs     AuditLog[]
+  projects      Project[]
 
   @@index([schoolId])
   @@map("users")
@@ -109,6 +111,31 @@ model Student {
 
   @@index([schoolId])
   @@map("students")
+}
+
+// ─────────────────────────────────────────────
+// Gallery — real shipped student projects, added as they ship at demo
+// days. Starts empty and grows; never backfilled with placeholder rows.
+// ─────────────────────────────────────────────
+
+model Project {
+  id            String   @id @default(cuid())
+  title         String
+  url           String
+  description   String?
+  trimester     String   // e.g. "Trimester 2" — free text, matches the
+                         // public curriculum labels rather than a rigid enum
+  studentNames  String   // free text: "Nakato B., Okello J." — avoids a
+                         // heavier many-to-many for what is fundamentally
+                         // instructor-entered credit text
+  school        School   @relation(fields: [schoolId], references: [id])
+  schoolId      String
+  createdBy     User     @relation(fields: [createdById], references: [id])
+  createdById   String
+  createdAt     DateTime @default(now())
+
+  @@index([schoolId])
+  @@map("projects")
 }
 
 // ─────────────────────────────────────────────

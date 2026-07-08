@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
+import { prisma } from "@/lib/prisma";
+
+// Force dynamic: this page shows real projects added via the admin Gallery.
+// Static generation would freeze it at build-time content — a newly added
+// project should appear on the next page load, not the next deploy.
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Projects — Innovation Club",
@@ -9,7 +15,17 @@ export const metadata: Metadata = {
     "Real projects built by Innovation Club students at Makindye Secondary School — from sustainability engineering to software shipped at trimester demo days.",
 };
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  // Same lesson as register's action: a DB hiccup shouldn't crash a public
+  // page for real visitors. Falls back to the honest static placeholder
+  // section below rather than a 500.
+  let projects: Awaited<ReturnType<typeof prisma.project.findMany>> = [];
+  try {
+    projects = await prisma.project.findMany({ orderBy: { createdAt: "desc" } });
+  } catch (err) {
+    console.error("[projects page] failed to load gallery projects:", err);
+  }
+
   return (
     <>
       <Navbar />
@@ -58,6 +74,37 @@ export default function ProjectsPage() {
             <span className="inline-block mt-8 text-brand font-medium">Explore the project →</span>
           </Link>
         </section>
+
+        {/* Real shipped projects — grows as demo days happen. Populated
+            via /dashboard/admin/gallery, not hand-edited here. */}
+        {projects.length > 0 && (
+          <section className="max-w-6xl mx-auto px-6 pt-20">
+            <p className="font-[family-name:var(--font-mono)] text-xs text-ink-faint tracking-wider">
+              Shipped by Students
+            </p>
+            <h2 className="font-[family-name:var(--font-display)] font-bold text-3xl sm:text-4xl mt-3">
+              Real work.
+              <br />
+              <span className="text-brand">Live and demoed.</span>
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4 mt-10">
+              {projects.map((p) => (
+                <a
+                  key={p.id}
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block border border-line bg-surface rounded-xl p-6 hover:border-ink-faint transition-colors"
+                >
+                  <span className="font-[family-name:var(--font-mono)] text-brand text-xs">{p.trimester}</span>
+                  <h3 className="font-[family-name:var(--font-display)] font-bold mt-2">{p.title} ↗</h3>
+                  {p.description && <p className="text-sm text-ink-faint mt-2 leading-relaxed">{p.description}</p>}
+                  <p className="text-xs text-ink-faint mt-3">{p.studentNames}</p>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* What ships next — honest, tied to the real programme */}
         <section className="max-w-6xl mx-auto px-6 pt-20">

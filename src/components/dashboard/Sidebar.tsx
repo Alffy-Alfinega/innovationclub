@@ -14,6 +14,10 @@ import {
   X,
   ArrowLeft,
   ShieldAlert,
+  Image as ImageIcon,
+  Activity,
+  BookOpen,
+  CircleUserRound,
 } from "lucide-react";
 
 const ROLE_ICON: Record<string, React.ElementType> = {
@@ -27,6 +31,8 @@ const ROLE_ICON: Record<string, React.ElementType> = {
 const LINK_ICON: Record<string, React.ElementType> = {
   "/dashboard/admin": Building2,
   "/dashboard/admin/users": UserCog,
+  "/dashboard/admin/gallery": ImageIcon,
+  "/dashboard/admin/activity": Activity,
   "/dashboard/operator": GraduationCap,
   "/dashboard/patron": Users,
   "/dashboard/student": UserCircle,
@@ -92,6 +98,25 @@ export default function Sidebar({
       </nav>
 
       <div className="px-3 py-4 border-t border-line space-y-1">
+        <Link
+          href="/dashboard/profile"
+          onClick={() => setMobileOpen(false)}
+          className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${
+            pathname === "/dashboard/profile"
+              ? "bg-brand/10 text-brand border border-brand/20"
+              : "text-ink-faint hover:text-ink hover:bg-surface-2"
+          }`}
+        >
+          <CircleUserRound size={16} />
+          Profile
+        </Link>
+        <Link
+          href="/lessons"
+          className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-ink-faint hover:text-ink hover:bg-surface-2 transition-colors"
+        >
+          <BookOpen size={16} />
+          Lessons
+        </Link>
         <Link
           href="/"
           className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-ink-faint hover:text-ink hover:bg-surface-2 transition-colors"
