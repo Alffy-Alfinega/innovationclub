@@ -85,3 +85,41 @@ continuous nav list at the top; only Sign Out remains pinned to the
 bottom (border-t, separate from the scrollable nav above). Profile
 renamed to Account throughout — folder, route, page title, component —
 avoiding a label/URL mismatch.
+
+## Curriculum restructure (2026-07-08, synced from "Curriculum reorganization
+## by trimester" chat — this is now the authoritative structure, supersedes
+## the original 6-theme list used at initial platform build)
+1. Computer Fundamentals & Web Foundations (merged) — hardware/OS, office
+   automation, HTML/CSS, GitHub Pages deploy
+2. Web App Development & Databases — JS, DOM, databases, Git/software
+   engineering principles
+3. Desktop App Development & Python — Python, Tkinter GUI, files/data,
+   debugging/testing/documentation
+4. Mobile App Development & Flutter — Dart, Flutter, multi-screen nav,
+   real-device deployment
+5. Computing Fundamentals to Advanced (NEW) — OS administration, hardware
+   maintenance, Linux, networking, security/troubleshooting
+6. AI & Business Communication — AI tools/APIs, prompt engineering,
+   entrepreneurship, business writing, pitching (capstone + demo day)
+
+**Open strategic flag, NOT resolved, deliberately left honest in copy**:
+T5's real-life project (assemble/configure/network machines) is hard to
+make visually compelling for non-technical funders/parents compared to
+an app demo. Flagged to Nashif; he may want a GUI front-end (e.g. network
+monitoring dashboard) bolted on later. Public copy should not oversell
+this trimester's demo-ability until that's actually decided.
+
+## Verification pass on the curriculum sync (2026-07-08)
+User caught me before shipping — asked to verify all 6 trimesters against
+the actual pasted source rather than trust the first transcription. Found
+real issues on review:
+- T4 had a genuine redundancy (layouts mentioned twice via a merged bullet
+  + a leftover separate bullet) — fixed.
+- T3 and T6 had bullets silently compressed from 2 source items into 1 —
+  restored to match source exactly.
+- T2 and T5 were exact 1:1 matches, no changes needed.
+- T1 carries 3 items NOT in this specific paste (file-paths-as-repository-
+  discipline, Git basics, PowerPoint) — these come from earlier confirmed
+  decisions in other project chats (PowerPoint explicitly added to T1 in
+  "Parent document preparation"), not fabricated, but flagged to the user
+  rather than silently kept — his call whether they stay.

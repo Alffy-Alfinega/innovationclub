@@ -10,12 +10,12 @@ const MARQUEE = [
 ];
 
 const TRIMESTERS = [
-  { n: "01", t: "Computer Fundamentals", d: "Hardware in programmer terms, typing discipline, file management as repository practice, and developer infrastructure — email, accounts, real tooling from day one." },
-  { n: "02", t: "Web Foundations", d: "HTML and CSS as engineering, not decoration. Every student ships a live site to GitHub Pages — loadable on any phone, not localhost." },
-  { n: "03", t: "Interactive Web Apps & Databases", d: "JavaScript, data, and the first real applications. State, storage, and the logic that makes pages do things." },
-  { n: "04", t: "Desktop App Development", d: "Python and GUI applications — software that installs and runs, built and demonstrated in front of a live audience." },
-  { n: "05", t: "Mobile App Development", d: "Flutter and Dart. Apps on the devices students actually own, built to vocational-grade standards." },
-  { n: "06", t: "AI & Business Communication", d: "Working with AI tools professionally, plus documentation, presentation, and the communication skills that turn builders into professionals." },
+  { n: "01", t: "Computer Fundamentals & Web Foundations", d: "Hardware and operating systems in programmer terms, real office automation, then HTML and CSS as engineering. Every student ships a live site to GitHub Pages — loadable on any phone, not localhost." },
+  { n: "02", t: "Web App Development & Databases", d: "JavaScript, DOM manipulation, and real data. Students connect a working app to a database — the first project a non-technical visitor can actually use, not just look at." },
+  { n: "03", t: "Desktop App Development & Python", d: "Python from first principles through Tkinter GUIs — reading and writing real files, debugging, and documenting like a professional, not just making it run once." },
+  { n: "04", t: "Mobile App Development & Flutter", d: "Dart and Flutter, multi-screen navigation, and deployment to real devices — an app installed on the students' own phones, not a simulator screenshot." },
+  { n: "05", t: "Computing Fundamentals to Advanced", d: "OS administration, hardware maintenance, Linux, and networking — the infrastructure layer behind everything built in the first four trimesters." },
+  { n: "06", t: "AI & Business Communication", d: "AI tools and APIs, prompt engineering, business writing, and pitching — the capstone trimester, presented live to parents and guests at demo day." },
 ];
 
 const WHY = [
