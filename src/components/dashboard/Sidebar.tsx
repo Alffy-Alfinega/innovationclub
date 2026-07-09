@@ -18,7 +18,9 @@ import {
   Activity,
   BookOpen,
   CircleUserRound,
+  ChevronDown,
 } from "lucide-react";
+import { CURRICULUM } from "@/lib/curriculum";
 
 const ROLE_ICON: Record<string, React.ElementType> = {
   ADMIN: Building2,
@@ -37,20 +39,50 @@ const LINK_ICON: Record<string, React.ElementType> = {
   "/dashboard/patron": Users,
   "/dashboard/student": UserCircle,
   "/dashboard/account": CircleUserRound,
-  "/lessons": BookOpen,
   "/": ArrowLeft,
 };
 
 export type NavLink = { href: string; label: string };
 
 // Shared across every role — appended after the role-specific links so
-// the whole thing reads as one continuous nav, not a role section plus a
-// separate fixed block. Only Sign Out stays pinned to the bottom.
+// the whole thing reads as one continuous nav. Only Sign Out stays
+// pinned to the bottom. "Lessons" is handled separately below (it's an
+// expandable group, not a flat link) — it used to point at the PUBLIC
+// /lessons page, which swapped out the whole dashboard chrome for the
+// marketing site's Navbar/Footer. Now it stays in-app.
 const SHARED_LINKS: NavLink[] = [
   { href: "/dashboard/account", label: "Account" },
-  { href: "/lessons", label: "Lessons" },
   { href: "/", label: "Back to site" },
 ];
+
+function NavLinkItem({
+  href,
+  label,
+  icon: Icon,
+  active,
+  onClick,
+}: {
+  href: string;
+  label: string;
+  icon: React.ElementType;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${
+        active
+          ? "bg-brand/10 text-brand border border-brand/20"
+          : "text-ink-faint hover:text-ink hover:bg-surface-2"
+      }`}
+    >
+      <Icon size={16} />
+      {label}
+    </Link>
+  );
+}
 
 export default function Sidebar({
   role,
@@ -65,8 +97,10 @@ export default function Sidebar({
 }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const onLessonsPage = pathname === "/dashboard/lessons";
+  const [lessonsOpen, setLessonsOpen] = useState(onLessonsPage);
   const RoleIcon = ROLE_ICON[role] ?? Users;
-  const allLinks = [...navLinks, ...SHARED_LINKS];
+  const close = () => setMobileOpen(false);
 
   const content = (
     <div className="flex flex-col h-full">
@@ -88,29 +122,71 @@ export default function Sidebar({
         </div>
       </div>
 
-      {/* One continuous nav: role-specific links, then Account/Lessons/
-          Back to site. No visual break between them — this IS the "align
-          the navigation" fix. */}
+      {/* One continuous nav: role-specific links, Lessons (expandable),
+          then Account/Back to site. No visual break between sections —
+          this is the "align the navigation" layout from before. */}
       <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-        {allLinks.map((link) => {
-          const active = pathname === link.href;
-          const LinkIcon = LINK_ICON[link.href] ?? RoleIcon;
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setMobileOpen(false)}
-              className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${
-                active
-                  ? "bg-brand/10 text-brand border border-brand/20"
-                  : "text-ink-faint hover:text-ink hover:bg-surface-2"
-              }`}
-            >
-              <LinkIcon size={16} />
-              {link.label}
+        {navLinks.map((link) => (
+          <NavLinkItem
+            key={link.href}
+            href={link.href}
+            label={link.label}
+            icon={LINK_ICON[link.href] ?? RoleIcon}
+            active={pathname === link.href}
+            onClick={close}
+          />
+        ))}
+
+        {/* Lessons — expandable group, borrowed from a reference platform's
+            nested-sidebar pattern rather than a flat link. The row itself
+            navigates to the in-dashboard overview; the chevron only
+            toggles the trimester sub-list, independent of navigation. */}
+        <div>
+          <div
+            className={`flex items-center gap-1 rounded-lg text-sm transition-colors ${
+              onLessonsPage
+                ? "bg-brand/10 text-brand border border-brand/20"
+                : "text-ink-faint hover:text-ink hover:bg-surface-2"
+            }`}
+          >
+            <Link href="/dashboard/lessons" onClick={close} className="flex-1 flex items-center gap-2.5 px-3 py-2 min-w-0">
+              <BookOpen size={16} />
+              Lessons
             </Link>
-          );
-        })}
+            <button
+              onClick={() => setLessonsOpen(!lessonsOpen)}
+              className="px-2 py-2 shrink-0"
+              aria-label={lessonsOpen ? "Collapse trimesters" : "Expand trimesters"}
+            >
+              <ChevronDown size={14} className={`transition-transform ${lessonsOpen ? "rotate-180" : ""}`} />
+            </button>
+          </div>
+          {lessonsOpen && (
+            <div className="mt-1 ml-4 pl-3 border-l border-line space-y-0.5">
+              {CURRICULUM.map((tri) => (
+                <Link
+                  key={tri.n}
+                  href={`/dashboard/lessons#t${tri.n}`}
+                  onClick={close}
+                  className="block px-3 py-1.5 rounded-md text-xs text-ink-faint hover:text-ink hover:bg-surface-2 transition-colors truncate"
+                >
+                  T{tri.n} — {tri.title}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {SHARED_LINKS.map((link) => (
+          <NavLinkItem
+            key={link.href}
+            href={link.href}
+            label={link.label}
+            icon={LINK_ICON[link.href] ?? RoleIcon}
+            active={pathname === link.href}
+            onClick={close}
+          />
+        ))}
       </nav>
 
       {/* Only Sign Out lives here now — everything else moved up top. */}

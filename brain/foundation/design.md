@@ -123,3 +123,27 @@ real issues on review:
   decisions in other project chats (PowerPoint explicitly added to T1 in
   "Parent document preparation"), not fabricated, but flagged to the user
   rather than silently kept — his call whether they stay.
+
+## In-dashboard Lessons (2026-07-09)
+Real bug fixed: sidebar "Lessons" pointed at the PUBLIC /lessons page,
+which swapped the entire dashboard shell (Navbar/Footer, no sidebar) —
+felt like getting bounced out of the app on every click.
+
+Studied a reference platform's screenshots (interschoolscoding.com,
+"IISCC Dashboard") for the fix pattern, not its gamification features
+(leaderboard/practice were already explicitly declined earlier) —
+specifically their expandable "Lessons ⌄" sidebar group with nested
+sub-items. Built the equivalent: src/lib/curriculum.ts is now the single
+source of truth for the CURRICULUM array (previously only lived inside
+the public page — extracted to prevent the public and in-dashboard
+versions from silently drifting apart, the same failure class fixed
+several times already today). Sidebar's Lessons row navigates to
+/dashboard/lessons; a separate chevron toggles a sub-list of all 6
+trimesters as quick-jump anchor links. The dashboard page itself is an
+accordion (one trimester open at a time, real topic data, no fabricated
+progress bars/completion percentages — that data doesn't exist and
+wasn't invented to match the reference app's look).
+
+Also independently confirmed by the reference platform: "Patron" is
+genuinely standard terminology for a club-supervising role, not just
+Nashif's or Claude's invention — same word, same concept, different app.
