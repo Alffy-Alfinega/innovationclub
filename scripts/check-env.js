@@ -12,7 +12,7 @@
  */
 require("dotenv").config();
 
-const required = ["DATABASE_URL", "AUTH_SECRET"];
+const required = ["DATABASE_URL", "DIRECT_DATABASE_URL", "AUTH_SECRET"];
 const missing = required.filter((key) => !process.env[key] || process.env[key].trim().length === 0);
 
 if (missing.length > 0) {

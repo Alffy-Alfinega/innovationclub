@@ -3,6 +3,15 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
+// DATABASE_URL is Neon's pooled (PgBouncer, transaction mode) endpoint —
+// correct for the runtime client (src/lib/prisma.ts via @prisma/adapter-neon),
+// wrong for migrations. `prisma migrate deploy` takes a session-scoped
+// Postgres advisory lock; PgBouncer in transaction mode doesn't hold a
+// session across statements, so the lock can stall or never resolve —
+// this is exactly the P1002 "timed out trying to acquire a postgres
+// advisory lock" failure from the 2026-08-30 deploy. directUrl routes
+// migrations to Neon's unpooled endpoint instead, which is what Prisma
+// docs and Neon's own guidance require for this combination.
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
@@ -10,5 +19,6 @@ export default defineConfig({
   },
   datasource: {
     url: process.env["DATABASE_URL"],
+    directUrl: process.env["DIRECT_DATABASE_URL"],
   },
 });
