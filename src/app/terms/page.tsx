@@ -13,7 +13,7 @@ export default function TermsPage() {
         <div className="mt-8 space-y-5 text-sm text-ink-muted leading-relaxed">
           <p>
             By registering, you confirm the information provided is accurate to the best of your
-            knowledge and consent to Innovation Club and Makindye Secondary School using it to
+            knowledge and consent to Innovation Club, Alffy (Alfinega) and your school using it to
             manage your membership, attendance, and participation in club activities.
           </p>
           <p>
