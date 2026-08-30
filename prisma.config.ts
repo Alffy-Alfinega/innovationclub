@@ -3,22 +3,24 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
-// DATABASE_URL is Neon's pooled (PgBouncer, transaction mode) endpoint —
-// correct for the runtime client (src/lib/prisma.ts via @prisma/adapter-neon),
-// wrong for migrations. `prisma migrate deploy` takes a session-scoped
-// Postgres advisory lock; PgBouncer in transaction mode doesn't hold a
-// session across statements, so the lock can stall or never resolve —
-// this is exactly the P1002 "timed out trying to acquire a postgres
-// advisory lock" failure from the 2026-08-30 deploy. directUrl routes
-// migrations to Neon's unpooled endpoint instead, which is what Prisma
-// docs and Neon's own guidance require for this combination.
+// prisma.config.ts's datasource.url is CLI-only in Prisma 7 (migrate,
+// generate, studio) — the running app never reads it. The runtime
+// PrismaClient gets its own connection independently via @prisma/adapter-neon
+// in src/lib/prisma.ts, pointed at the pooled DATABASE_URL, which is correct
+// for serverless. So this url should be the DIRECT (unpooled) Neon
+// connection — migrations need a session-scoped connection to hold their
+// Postgres advisory lock, and a PgBouncer transaction-mode pooler doesn't
+// preserve session state across statements, which caused the P1002
+// "timed out trying to acquire a postgres advisory lock" failure on the
+// 2026-08-30 deploy. (First attempt at this fix tried datasource.directUrl,
+// which doesn't exist on this type in 7.8.0 — caught by the build's own
+// type-checker, not assumed.)
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
-    directUrl: process.env["DIRECT_DATABASE_URL"],
+    url: process.env["DIRECT_DATABASE_URL"],
   },
 });

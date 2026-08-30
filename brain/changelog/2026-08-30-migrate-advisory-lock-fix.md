@@ -45,3 +45,13 @@ whether the Vercel-Neon integration already injected one as
 
 Until that var is set in Vercel, this exact build will fail the same way
 again on the next deploy — the code fix alone is not sufficient.
+
+## Correction (same day)
+First push of this fix used `datasource: { url: DATABASE_URL, directUrl: DIRECT_DATABASE_URL }`. That failed the *next* build with a real type error:
+```
+Object literal may only specify known properties, and 'directUrl' does not
+exist in type '{ url?: string; shadowDatabaseUrl?: string }'.
+```
+`directUrl` isn't a valid field in Prisma 7.8.0's `prisma.config.ts` datasource type — that pattern applies to the classic `schema.prisma` `datasource` block in older Prisma versions, not this project's `prisma.config.ts` setup. Caught by the build's own type-checker, not assumed correct from docs.
+
+Corrected fix: since `prisma.config.ts`'s `datasource.url` is CLI-only in Prisma 7 (the runtime app never reads it — `src/lib/prisma.ts` gets its connection independently via `@prisma/adapter-neon`, pointed at `DATABASE_URL`), there's nothing to split. `prisma.config.ts` now sets its single `url` directly to `DIRECT_DATABASE_URL`. Verified with `tsc --noEmit` before pushing this time.
