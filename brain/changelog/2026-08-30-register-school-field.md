@@ -25,7 +25,7 @@ school as the default is wrong for a platform whose entire premise is
 multi-school (Master Constitution + Schedule A chapters). The form was
 blocking every school except Makindye from registering at all.
 
-## Known gap — flagged, not fixed here
+## Known gap — flagged, decision made
 Self-service school creation via a public, unauthenticated form has **no
 moderation gate**. `AuditLog.userId` is non-nullable, so this action can't
 log to the audit trail the way `addSchoolAction` (admin-side) does — there's
@@ -35,10 +35,11 @@ no user to attribute it to. Risks:
 - Nothing notifies Nashif/Mukasa when a brand-new school self-registers.
 - Spam/bot submissions can create junk `School` rows with no review step.
 
-Recommended next step: add a `verified Boolean @default(false)` (or similar
-status) to `School`, and surface unverified schools in the admin dashboard
-for a one-click approve/merge action. Not implemented now — kept this change
-surgical to the reported bug.
+**Decision (2026-08-30, Nashif): open self-service is fine for now.** Not a
+gap to silently fix later — a deliberate call, revisit if spam/dupes
+actually show up in the `schools` table. If that happens, the recommended
+next step is still a `verified Boolean @default(false)` on `School` with an
+admin approve/merge screen.
 
 ## Files touched
 - `src/app/register/page.tsx` (rewritten — server component)
