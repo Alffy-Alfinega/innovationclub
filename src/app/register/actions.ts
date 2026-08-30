@@ -7,6 +7,19 @@ import { Prisma } from "@prisma/client";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /^[0-9+()\-\s]{7,20}$/;
 
+// Kept identical to src/app/dashboard/admin/schools/actions.ts:slugify —
+// same slug rules must produce the same slug for the same name in both
+// places, or the same school could end up created twice under different
+// slugs depending on which form was used.
+function slugify(name: string): string {
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
 function mapStatus(raw: string | null): "DAY_SCHOLAR" | "BOARDING_SCHOLAR" | null {
   if (!raw) return null;
   if (raw.toLowerCase().includes("day")) return "DAY_SCHOLAR";
@@ -29,6 +42,7 @@ export async function registerAction(
   const stream = (formData.get("stream") as string) || "";
   const statusRaw = (formData.get("status") as string) || "";
   const termJoined = (formData.get("termJoined") as string) || "";
+  const school = ((formData.get("school") as string) || "").trim();
   const email = ((formData.get("email") as string) || "").trim();
   const phone = ((formData.get("phone") as string) || "").trim();
   const innovationClub = formData.get("innovationClub") === "on";
@@ -39,6 +53,7 @@ export async function registerAction(
   if (firstName.length < 2) errors.push("First name is required.");
   if (lastName.length < 2) errors.push("Last name is required.");
   if (!className) errors.push("Class is required.");
+  if (school.length < 3) errors.push("School name is required.");
   if (!agree) errors.push("You must agree to the terms of participation.");
   if (email && !EMAIL_RE.test(email)) errors.push("Please enter a valid email address.");
   if (phone && !PHONE_RE.test(phone)) errors.push("Please enter a valid phone number.");
@@ -50,8 +65,40 @@ export async function registerAction(
   // friendly inline error instead of crashing the whole page — this is
   // exactly the failure mode that hit 51 real registrants on 2026-07-04.
   try {
-    const school = await prisma.school.findUnique({ where: { slug: "makindye" } });
-    if (!school) {
+    const slug = slugify(school);
+    if (!slug) {
+      return { errors: ["School name must contain letters or numbers."] };
+    }
+
+    // Find by slug or case-insensitive name first — "Makindye Secondary
+    // School" and "makindye secondary school" must resolve to the same
+    // tenant, not create a duplicate. Only create a new School row if no
+    // match exists.
+    let schoolRecord = await prisma.school.findFirst({
+      where: { OR: [{ slug }, { name: { equals: school, mode: "insensitive" } }] },
+    });
+
+    if (!schoolRecord) {
+      try {
+        schoolRecord = await prisma.school.create({
+          data: { name: school, slug },
+        });
+      } catch (createErr) {
+        // Race: two people registering for the same brand-new school at
+        // once could both pass the findFirst check above and then collide
+        // on the unique slug. Re-fetch instead of failing the registration.
+        if (
+          createErr instanceof Prisma.PrismaClientKnownRequestError &&
+          createErr.code === "P2002"
+        ) {
+          schoolRecord = await prisma.school.findUnique({ where: { slug } });
+        } else {
+          throw createErr;
+        }
+      }
+    }
+
+    if (!schoolRecord) {
       return {
         errors: [
           "Registration is temporarily unavailable while we finish setting up. Please contact the school directly or try again shortly.",
@@ -61,7 +108,7 @@ export async function registerAction(
 
     await prisma.student.create({
       data: {
-        schoolId: school.id,
+        schoolId: schoolRecord.id,
         firstName,
         middleName: middleName || null,
         lastName,
